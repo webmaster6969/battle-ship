@@ -73,6 +73,42 @@ public class GamePole : MonoBehaviour
 
     public void WhoClick(int X, int Y)
     {
-        Pole[X, Y].GetComponent<Chanks>().index = 1;
+        if(TestEnterDeck(X, Y))
+        {
+            Pole[X, Y].GetComponent<Chanks>().index = 1;
+        }
+    }
+
+    bool TestEnterDeck(int X, int Y)
+    {
+        if((X > -1) && (Y > -1) && (X < 10) && (Y < 10)) {
+            int[] XX = new int[9], YY = new int[9];
+
+            XX[0] = X + 1; XX[1] = X;       XX[2] = X - 1;
+            YY[0] = Y + 1; YY[1] = Y + 1;   YY[2] = Y + 1;
+
+            XX[3] = X + 1;  XX[4] = X; XX[5] = X - 1;
+            YY[3] = Y;      YY[4] = Y; YY[5] = Y;
+
+            XX[6] = X + 1; XX[7] = X;       XX[8] = X - 1;
+            YY[6] = Y - 1; YY[7] = Y - 1;   YY[8] = Y - 1;
+
+
+            for (int I = 0; I < 9; I++)
+            {
+                if((XX[I] > -1) && (YY[I] > -1) && (XX[I] < 10) && (YY[I] < 10))
+                {
+                    if(Pole[XX[I], YY[I]].GetComponent<Chanks>().index != 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+
+        }
+
+        return false;
     }
 }
