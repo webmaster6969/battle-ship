@@ -13,6 +13,11 @@ public class GamePole : MonoBehaviour
 
     int lengPole = 10;
 
+    struct TestCoord
+    {
+        public int X, Y;
+    }
+
     void CreatePole()
     {
         Vector3 StartPoze = transform.position;
@@ -73,10 +78,12 @@ public class GamePole : MonoBehaviour
 
     public void WhoClick(int X, int Y)
     {
-        if(TestEnterDeck(X, Y))
+        /*if(TestEnterDeck(X, Y))
         {
             Pole[X, Y].GetComponent<Chanks>().index = 1;
-        }
+        }*/
+
+        EnterDeck(4, 1, X, Y);
     }
 
     bool TestEnterDeck(int X, int Y)
@@ -111,4 +118,77 @@ public class GamePole : MonoBehaviour
 
         return false;
     }
+
+    TestCoord[] TestEnterShipDirect(int ShipType, int XD, int YD, int X, int Y)
+    {
+        TestCoord[] ResultCoord = new TestCoord[ShipType];
+
+        for (int P = 0; P < ShipType; P++)
+        {
+            if(TestEnterDeck(X, Y))
+            {
+                ResultCoord[P].X = X;
+                ResultCoord[P].Y = Y;
+            } else
+            {
+                return null;
+            }
+
+            X += XD;
+            Y += YD;
+
+        }
+
+        return ResultCoord;
+    }
+
+    TestCoord[] TestEnterShip(int ShipType, int Direct, int X, int Y)
+    {
+        TestCoord[] ResultCoord = new TestCoord[ShipType];
+
+        if (TestEnterDeck(X, Y))
+        {
+            switch (Direct)
+            {
+                case 0:
+                    ResultCoord = TestEnterShipDirect(ShipType, 1, 0, X, Y);
+
+                    if(ResultCoord == null)
+                    {
+                        ResultCoord = TestEnterShipDirect(ShipType, -1, 0, X, Y);
+                    }
+
+                    break;
+                case 1:
+                    ResultCoord = TestEnterShipDirect(ShipType, 0, 1, X, Y);
+
+                    if (ResultCoord == null)
+                    {
+                        ResultCoord = TestEnterShipDirect(ShipType, 0, -1, X, Y);
+                    }
+
+                    break;
+            }
+
+            return ResultCoord;
+        }
+
+       return null;
+    }
+
+    bool EnterDeck(int ShipType, int Direct, int X, int Y)
+    {
+        TestCoord[] P = TestEnterShip(ShipType, Direct, X, Y);
+
+        if (P != null) {
+            foreach(TestCoord T in P) {
+                Pole[T.X, T.Y].GetComponent<Chanks>().index = 1;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
 }
