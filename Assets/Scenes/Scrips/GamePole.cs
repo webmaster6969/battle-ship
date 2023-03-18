@@ -15,9 +15,49 @@ public class GamePole : MonoBehaviour
 
     public int[] ShipCount = { 0, 4, 3, 2, 1};
 
+    struct TestCoord
+    {
+        public int X, Y;
+    }
+
+    struct Ship
+    {
+        public TestCoord[] ShipCoord;
+    }
+
+    List<Ship> ListShip = new List<Ship>();
+
+    bool Shoot(int X, int Y)
+    {
+        int PoleSelect = Pole[X, Y].GetComponent<Chanks>().index;
+        bool Result = false;
+
+        switch(PoleSelect) {
+            case 0:
+                Pole[X, Y].GetComponent<Chanks>().index = 2;
+                Result = false;
+                break;
+            case 1:
+                Pole[X, Y].GetComponent<Chanks>().index = 3;
+                Result = true;
+
+                if(TestShoot(X, Y))
+                {
+
+                } else
+                {
+
+                }
+                break;
+        }
+
+        return Result;
+    }
+
     void ClearPole()
     {
         ShipCount = new int[] { 0, 4, 3, 2, 1};
+        ListShip.Clear();
 
         for(int X = 0; X < lengPole; X++) {
             for (int Y = 0; Y < lengPole; Y++)
@@ -66,11 +106,6 @@ public class GamePole : MonoBehaviour
         }
 
         return false;
-    }
-
-    struct TestCoord
-    {
-        public int X, Y;
     }
 
     void CreatePole()
@@ -123,6 +158,7 @@ public class GamePole : MonoBehaviour
     void Start()
     {
         CreatePole();
+        EnterRandomShip();
     }
 
     // Update is called once per frame
@@ -138,7 +174,7 @@ public class GamePole : MonoBehaviour
             Pole[X, Y].GetComponent<Chanks>().index = 1;
         }*/
 
-        EnterRandomShip();
+        Shoot(X, Y);
     }
 
     bool TestEnterDeck(int X, int Y)
@@ -240,10 +276,51 @@ public class GamePole : MonoBehaviour
                 Pole[T.X, T.Y].GetComponent<Chanks>().index = 1;
             }
 
+            Ship Deck;
+
+            Deck.ShipCoord = P;
+
+            ListShip.Add(Deck);
+
             return true;
         }
 
         return false;
+    }
+
+    bool TestShoot(int X, int Y)
+    {
+        bool Result = false;
+
+        foreach(Ship Test in ListShip)
+        {
+            foreach (TestCoord Paluba in Test.ShipCoord)
+            {
+                if ((Paluba.X == X) && (Paluba.Y == Y))
+                {
+                    int CountKill = 0;
+                    foreach(TestCoord KillPaluba in Test.ShipCoord)
+                    {
+                        int TestBlock = Pole[KillPaluba.X, KillPaluba.Y].GetComponent<Chanks>().index;
+
+                        if(TestBlock == 3)
+                        {
+                            CountKill++;
+                        }
+                    }
+
+                    if(CountKill == Test.ShipCoord.Length)
+                    {
+                        Result = true;
+                    } else
+                    {
+                        Result = false;
+                    }
+                }
+            }
+        }
+
+        return Result;
     }
 
 }
