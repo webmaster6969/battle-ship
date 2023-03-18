@@ -323,4 +323,18 @@ public class GamePole : MonoBehaviour
         return Result;
     }
 
+    public int LifeShip()
+    {
+        int countLife = 0;
+
+        foreach (Ship Test in ListShip)
+        {
+            foreach(TestCoord Paluba in Test.ShipCoord)
+            {
+                int TestBlock = Pole[Paluba.X, Paluba.Y].GetComponent<Chanks>().index;
+            }
+        }
+
+        return countLife;
+    }
 }
