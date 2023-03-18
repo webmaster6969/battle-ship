@@ -49,6 +49,9 @@ public class GamePole : MonoBehaviour
                 Pole[X, Y] = Instantiate(ePole);
                 Pole[X, Y].GetComponent<Chanks>().index = 0;
                 Pole[X, Y].transform.position = new Vector3(XX, YY, StartPoze.z);
+                Pole[X, Y].GetComponent<ClickPole>().whoPerent = this.gameObject;
+                Pole[X, Y].GetComponent<ClickPole>().coordX = X;
+                Pole[X, Y].GetComponent<ClickPole>().CoordY = Y;
                 XX++;
             }
             XX = StartPoze.x + 1;
@@ -66,5 +69,10 @@ public class GamePole : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void WhoClick(int X, int Y)
+    {
+        Pole[X, Y].GetComponent<Chanks>().index = 1;
     }
 }

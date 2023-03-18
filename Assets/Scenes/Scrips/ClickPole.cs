@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ClickPole : MonoBehaviour
 {
+
+    public GameObject whoPerent = null;
+    public int coordX, CoordY;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +18,13 @@ public class ClickPole : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnMouseDown()
+    {
+        if(whoPerent != null)
+        {
+            whoPerent.GetComponent<GamePole>().WhoClick(coordX, CoordY);
+        }
     }
 }
