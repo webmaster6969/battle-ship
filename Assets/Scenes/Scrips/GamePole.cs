@@ -13,6 +13,61 @@ public class GamePole : MonoBehaviour
 
     int lengPole = 10;
 
+    public int[] ShipCount = { 0, 4, 3, 2, 1};
+
+    void ClearPole()
+    {
+        ShipCount = new int[] { 0, 4, 3, 2, 1};
+
+        for(int X = 0; X < lengPole; X++) {
+            for (int Y = 0; Y < lengPole; Y++)
+            {
+                Pole[X, Y].GetComponent<Chanks>().index = 0;
+            }
+        }
+    }
+
+    void EnterRandomShip()
+    {
+        ClearPole();
+        int SelectShip = 4;
+        int X, Y;
+        int Direct;
+
+        while (CountShips())
+        {
+            X = Random.RandomRange(0, 10);
+            Y = Random.RandomRange(0, 10);
+            Direct = Random.RandomRange(0, 2);
+            if(EnterDeck(SelectShip, Direct, X, Y))
+            {
+                ShipCount[SelectShip]--;
+
+                if(ShipCount[SelectShip] == 0)
+                {
+                    SelectShip--;
+                }
+            }
+        }
+    }
+
+    bool CountShips()
+    {
+        int Amaunt = 0;
+
+        foreach (int Ship in ShipCount)
+        {
+            Amaunt += Ship;
+        }
+
+        if (Amaunt != 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     struct TestCoord
     {
         public int X, Y;
@@ -83,7 +138,7 @@ public class GamePole : MonoBehaviour
             Pole[X, Y].GetComponent<Chanks>().index = 1;
         }*/
 
-        EnterDeck(4, 1, X, Y);
+        EnterRandomShip();
     }
 
     bool TestEnterDeck(int X, int Y)
