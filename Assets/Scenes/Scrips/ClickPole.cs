@@ -20,6 +20,7 @@ public class ClickPole : MonoBehaviour
         
     }
 
+    // Сделать ход по полю в зависемости от нажатия мыши
     private void OnMouseDown()
     {
         if(whoPerent != null)

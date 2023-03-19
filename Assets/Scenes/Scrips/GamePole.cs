@@ -4,34 +4,47 @@ using UnityEngine;
 
 public class GamePole : MonoBehaviour
 {
-
+    // Наборы символов и полей для отображения
     public GameObject eLiters, eNums, ePole;
 
+
+    // Массивы символов и полей для отображения
     GameObject[] Liters;
     GameObject[] Nums;
     GameObject[,] Pole;
 
+    // Длина поля по вертикале и горизонтале
     int lengPole = 10;
 
+
+    // Какие корабли ставим на поле
     public int[] ShipCount = { 0, 4, 3, 2, 1};
 
+    // Коодинаты части коробля
     struct TestCoord
     {
         public int X, Y;
     }
 
+
+    // Части коробля
     struct Ship
     {
         public TestCoord[] ShipCoord;
     }
 
+    // Список частей коробля
     List<Ship> ListShip = new List<Ship>();
 
+    // Реакция на выстрел
     bool Shoot(int X, int Y)
     {
+        // Выбираем поле по которому сделан выстрел
         int PoleSelect = Pole[X, Y].GetComponent<Chanks>().index;
         bool Result = false;
 
+
+        // Анализируем и задае статус полю в зависемости от типа поля
         switch(PoleSelect) {
             case 0:
                 Pole[X, Y].GetComponent<Chanks>().index = 2;

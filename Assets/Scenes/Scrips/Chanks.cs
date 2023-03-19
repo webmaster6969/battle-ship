@@ -7,6 +7,7 @@ public class Chanks : MonoBehaviour
     public Sprite[] imgs;
     public int index = 0;
 
+    //  аждый раз при отрисовки сцены, присваиваем правильное изоброжение пол€
     public void ChangeImgs()
     {
         if(imgs.Length > index)
