@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class GamePole : MonoBehaviour
 {
-    // Наборы символов и полей для отображения
+    // Наборы символов и ячеек для отображения
     public GameObject eLiters, eNums, ePole;
 
 
-    // Массивы символов и полей для отображения
+    // Массивы символов и ячеек для отображения
     GameObject[] Liters;
     GameObject[] Nums;
-    GameObject[,] Pole;
+    GameObject[,] Cells;
 
-    // Длина поля по вертикале и горизонтале
-    int lengPole = 10;
+    // Длина ячеек по вертикале и горизонтале
+    int lengCells = 10;
 
 
     // Какие корабли ставим на поле
@@ -39,21 +39,23 @@ public class GamePole : MonoBehaviour
     // Реакция на выстрел
     bool Shoot(int X, int Y)
     {
-        // Выбираем поле по которому сделан выстрел
-        int PoleSelect = Pole[X, Y].GetComponent<Chanks>().index;
+        GameObject cellSelect = Cells[X, Y];
+        // Выбираем ячейку по которому сделан выстрел
+        int PoleSelect = cellSelect.GetComponent<Chanks>().index;
         bool Result = false;
 
 
-        // Анализируем и задае статус полю в зависемости от типа поля
+        // Анализируем и задаем статус ячейки в зависемости от типа поля
         switch(PoleSelect) {
-            case 0:
-                Pole[X, Y].GetComponent<Chanks>().index = 2;
+            case 0: // Пустая ячейка, ставим промах
+                cellSelect.GetComponent<Chanks>().index = 2;
                 Result = false;
                 break;
-            case 1:
-                Pole[X, Y].GetComponent<Chanks>().index = 3;
+            case 1: // На поле есть часть коробля, ставим попадание в ячейку
+                cellSelect.GetComponent<Chanks>().index = 3;
                 Result = true;
 
+                // Анализиуем погиб ли корабль или нет
                 if(TestShoot(X, Y))
                 {
 
@@ -67,24 +69,31 @@ public class GamePole : MonoBehaviour
         return Result;
     }
 
+    // Очищаем полотно
     void ClearPole()
     {
         ShipCount = new int[] { 0, 4, 3, 2, 1};
         ListShip.Clear();
 
-        for(int X = 0; X < lengPole; X++) {
-            for (int Y = 0; Y < lengPole; Y++)
+        for(int X = 0; X < lengCells; X++) {
+            for (int Y = 0; Y < lengCells; Y++)
             {
-                Pole[X, Y].GetComponent<Chanks>().index = 0;
+                Cells[X, Y].GetComponent<Chanks>().index = 0;
             }
         }
     }
 
+    // Ставим коробли на ячейки
     void EnterRandomShip()
     {
+        // Очищаем ячейки
         ClearPole();
+        // Начинаем ставить с 4 палубного корабля
         int SelectShip = 4;
+
         int X, Y;
+
+        // Направление
         int Direct;
 
         while (CountShips())
