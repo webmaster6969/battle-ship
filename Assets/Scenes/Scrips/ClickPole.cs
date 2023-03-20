@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class ClickPole : MonoBehaviour
 {
     public GameObject whoPerent = null;
@@ -15,7 +16,7 @@ public class ClickPole : MonoBehaviour
     {
     }
 
-    // Сделать ход по полю в зависемости от нажатия мыши
+    // вЂ”РґРµР»Р°С‚СЊ С…РѕРґ РїРѕ РїРѕР»СЋ РІ Р·Р°РІРёСЃРµРјРѕСЃС‚Рё РѕС‚ РЅР°Р¶Р°С‚РёВ¤ РјС‹С€Рё
     private void OnMouseDown()
     {
         if (whoPerent != null)

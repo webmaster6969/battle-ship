@@ -5,7 +5,7 @@ public class Chanks : MonoBehaviour
     public Sprite[] imgs;
     public int index = 0;
 
-    // Êàæäûé ğàç ïğè îòğèñîâêè ñöåíû, ïğèñâàèâàåì ïğàâèëüíîå èçîáğîæåíèå ïîëÿ
+    // ĞšĞ°Ğ¶Ğ´Ñ‹Ğ¹ Ñ€Ğ°Ğ· Ğ¿Ñ€Ğ¸ Ğ¾Ñ‚Ñ€Ğ¸ÑĞ¾Ğ²ĞºĞ¸ ÑÑ†ĞµĞ½Ñ‹, Ğ¿Ñ€Ğ¸ÑĞ²Ğ°Ğ¸Ğ²Ğ°ĞµĞ¼ Ğ¿Ñ€Ğ°Ğ²Ğ¸Ğ»ÑŒĞ½Ğ¾Ğµ Ğ¸Ğ·Ğ¾Ğ±Ñ€Ğ¾Ğ¶ĞµĞ½Ğ¸Ğµ Ğ¿Ğ¾Ğ»Ñ
     public void ChangeImgs()
     {
         if (imgs.Length > index)
