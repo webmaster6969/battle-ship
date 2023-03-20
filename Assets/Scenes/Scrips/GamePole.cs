@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,61 +6,59 @@ public class GamePole : MonoBehaviour
     // Наборы символов и ячеек для отображения
     public GameObject eLiters, eNums, ePole;
 
-
     // Массивы символов и ячеек для отображения
-    GameObject[] Liters;
-    GameObject[] Nums;
-    GameObject[,] Cells;
+    private GameObject[] Liters;
+
+    private GameObject[] Nums;
+    private GameObject[,] Cells;
 
     // Длина ячеек по вертикале и горизонтале
-    int lengCells = 10;
-
+    private int lengCells = 10;
 
     // Какие корабли ставим на поле
-    public int[] ShipCount = { 0, 4, 3, 2, 1};
+    public int[] ShipCount = { 0, 4, 3, 2, 1 };
 
     // Коодинаты части коробля
-    struct TestCoord
+    private struct TestCoord
     {
         public int X, Y;
     }
 
-
     // Части коробля
-    struct Ship
+    private struct Ship
     {
         public TestCoord[] ShipCoord;
     }
 
     // Список частей коробля
-    List<Ship> ListShip = new List<Ship>();
+    private List<Ship> ListShip = new List<Ship>();
 
     // Реакция на выстрел
-    bool Shoot(int X, int Y)
+    private bool Shoot(int X, int Y)
     {
         GameObject cellSelect = Cells[X, Y];
         // Выбираем ячейку по которому сделан выстрел
         int PoleSelect = cellSelect.GetComponent<Chanks>().index;
         bool Result = false;
 
-
         // Анализируем и задаем статус ячейки в зависемости от типа поля
-        switch(PoleSelect) {
+        switch (PoleSelect)
+        {
             case 0: // Пустая ячейка, ставим промах
                 cellSelect.GetComponent<Chanks>().index = 2;
                 Result = false;
                 break;
+
             case 1: // На поле есть часть коробля, ставим попадание в ячейку
                 cellSelect.GetComponent<Chanks>().index = 3;
                 Result = true;
 
                 // Анализиуем погиб ли корабль или нет
-                if(TestShoot(X, Y))
+                if (TestShoot(X, Y))
                 {
-
-                } else
+                }
+                else
                 {
-
                 }
                 break;
         }
@@ -70,12 +67,13 @@ public class GamePole : MonoBehaviour
     }
 
     // Очищаем полотно
-    void ClearPole()
+    private void ClearPole()
     {
-        ShipCount = new int[] { 0, 4, 3, 2, 1};
+        ShipCount = new int[] { 0, 4, 3, 2, 1 };
         ListShip.Clear();
 
-        for(int X = 0; X < lengCells; X++) {
+        for (int X = 0; X < lengCells; X++)
+        {
             for (int Y = 0; Y < lengCells; Y++)
             {
                 Cells[X, Y].GetComponent<Chanks>().index = 0;
@@ -84,7 +82,7 @@ public class GamePole : MonoBehaviour
     }
 
     // Ставим коробли на ячейки
-    void EnterRandomShip()
+    private void EnterRandomShip()
     {
         // Очищаем ячейки
         ClearPole();
@@ -96,16 +94,22 @@ public class GamePole : MonoBehaviour
         // Направление
         int Direct;
 
+        // Расставляем корабли
         while (CountShips())
         {
-            X = Random.RandomRange(0, 10);
-            Y = Random.RandomRange(0, 10);
-            Direct = Random.RandomRange(0, 2);
-            if(EnterDeck(SelectShip, Direct, X, Y))
+            // Выбираем случайное
+            X = Random.Range(0, 10);
+            Y = Random.Range(0, 10);
+
+            // Выбираем направление
+            Direct = Random.Range(0, 2);
+
+            // Проверяем, встанет ли корабль правильно в выбранное поле
+            if (EnterDeck(SelectShip, Direct, X, Y))
             {
                 ShipCount[SelectShip]--;
 
-                if(ShipCount[SelectShip] == 0)
+                if (ShipCount[SelectShip] == 0)
                 {
                     SelectShip--;
                 }
@@ -113,7 +117,7 @@ public class GamePole : MonoBehaviour
         }
     }
 
-    bool CountShips()
+    private bool CountShips()
     {
         int Amaunt = 0;
 
@@ -130,19 +134,19 @@ public class GamePole : MonoBehaviour
         return false;
     }
 
-    void CreatePole()
+    private void CreatePole()
     {
         Vector3 StartPoze = transform.position;
 
         float XX = StartPoze.x + 1;
         float YY = StartPoze.y - 1;
 
-        Liters = new GameObject[lengPole];
-        Nums = new GameObject[lengPole];
+        Liters = new GameObject[lengCells];
+        Nums = new GameObject[lengCells];
 
-        Pole = new GameObject[10, 10];
+        Cells = new GameObject[10, 10];
 
-        for (int Nadpis = 0; Nadpis < lengPole; Nadpis++)
+        for (int Nadpis = 0; Nadpis < lengCells; Nadpis++)
         {
             Liters[Nadpis] = Instantiate(eLiters);
             Liters[Nadpis].transform.position = new Vector3(XX, StartPoze.y, StartPoze.z);
@@ -155,20 +159,19 @@ public class GamePole : MonoBehaviour
             YY--;
         }
 
-
         XX = StartPoze.x + 1;
         YY = StartPoze.y - 1;
 
-        for (int Y = 0; Y < lengPole; Y++)
+        for (int Y = 0; Y < lengCells; Y++)
         {
-            for (int X = 0; X < lengPole; X++)
+            for (int X = 0; X < lengCells; X++)
             {
-                Pole[X, Y] = Instantiate(ePole);
-                Pole[X, Y].GetComponent<Chanks>().index = 0;
-                Pole[X, Y].transform.position = new Vector3(XX, YY, StartPoze.z);
-                Pole[X, Y].GetComponent<ClickPole>().whoPerent = this.gameObject;
-                Pole[X, Y].GetComponent<ClickPole>().coordX = X;
-                Pole[X, Y].GetComponent<ClickPole>().CoordY = Y;
+                Cells[X, Y] = Instantiate(ePole);
+                Cells[X, Y].GetComponent<Chanks>().index = 0;
+                Cells[X, Y].transform.position = new Vector3(XX, YY, StartPoze.z);
+                Cells[X, Y].GetComponent<ClickPole>().whoPerent = this.gameObject;
+                Cells[X, Y].GetComponent<ClickPole>().coordX = X;
+                Cells[X, Y].GetComponent<ClickPole>().CoordY = Y;
                 XX++;
             }
             XX = StartPoze.x + 1;
@@ -177,16 +180,15 @@ public class GamePole : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         CreatePole();
         EnterRandomShip();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
     }
 
     public void WhoClick(int X, int Y)
@@ -199,26 +201,33 @@ public class GamePole : MonoBehaviour
         Shoot(X, Y);
     }
 
-    bool TestEnterDeck(int X, int Y)
+    // Проверяем годность ячейки для вставки в нее корабля
+    private bool TestEnterDeck(int X, int Y)
     {
-        if((X > -1) && (Y > -1) && (X < 10) && (Y < 10)) {
+        // Проверяем что мы не вышли за пределы ячейки
+        if ((X > -1) && (Y > -1) && (X < 10) && (Y < 10))
+        {
+            // Выделяем память для места куда хотим поставить корабль
             int[] XX = new int[9], YY = new int[9];
 
-            XX[0] = X + 1; XX[1] = X;       XX[2] = X - 1;
-            YY[0] = Y + 1; YY[1] = Y + 1;   YY[2] = Y + 1;
+            // Метим ячейки которые хотим заполнить и чтобы между были пустые
+            XX[0] = X + 1; XX[1] = X; XX[2] = X - 1;
+            YY[0] = Y + 1; YY[1] = Y + 1; YY[2] = Y + 1;
 
-            XX[3] = X + 1;  XX[4] = X; XX[5] = X - 1;
-            YY[3] = Y;      YY[4] = Y; YY[5] = Y;
+            XX[3] = X + 1; XX[4] = X; XX[5] = X - 1;
+            YY[3] = Y; YY[4] = Y; YY[5] = Y;
 
-            XX[6] = X + 1; XX[7] = X;       XX[8] = X - 1;
-            YY[6] = Y - 1; YY[7] = Y - 1;   YY[8] = Y - 1;
+            XX[6] = X + 1; XX[7] = X; XX[8] = X - 1;
+            YY[6] = Y - 1; YY[7] = Y - 1; YY[8] = Y - 1;
 
-
+            // Проверяем все ячейки
             for (int I = 0; I < 9; I++)
             {
-                if((XX[I] > -1) && (YY[I] > -1) && (XX[I] < 10) && (YY[I] < 10))
+                // Проверяем что ячейка не вышла за пределы поля
+                if ((XX[I] > -1) && (YY[I] > -1) && (XX[I] < 10) && (YY[I] < 10))
                 {
-                    if(Pole[XX[I], YY[I]].GetComponent<Chanks>().index != 0)
+                    // Проверяем что ячейка пуста
+                    if (Cells[XX[I], YY[I]].GetComponent<Chanks>().index != 0)
                     {
                         return false;
                     }
@@ -226,52 +235,53 @@ public class GamePole : MonoBehaviour
             }
 
             return true;
-
         }
 
         return false;
     }
 
-    TestCoord[] TestEnterShipDirect(int ShipType, int XD, int YD, int X, int Y)
+    private TestCoord[] TestEnterShipDirect(int ShipType, int XD, int YD, int X, int Y)
     {
         TestCoord[] ResultCoord = new TestCoord[ShipType];
 
         for (int P = 0; P < ShipType; P++)
         {
-            if(TestEnterDeck(X, Y))
+            if (TestEnterDeck(X, Y))
             {
                 ResultCoord[P].X = X;
                 ResultCoord[P].Y = Y;
-            } else
+            }
+            else
             {
                 return null;
             }
 
             X += XD;
             Y += YD;
-
         }
 
         return ResultCoord;
     }
 
-    TestCoord[] TestEnterShip(int ShipType, int Direct, int X, int Y)
+    private TestCoord[] TestEnterShip(int ShipType, int Direct, int X, int Y)
     {
         TestCoord[] ResultCoord = new TestCoord[ShipType];
 
         if (TestEnterDeck(X, Y))
         {
+            // Выбираем в зависемости от напрвления
             switch (Direct)
             {
                 case 0:
                     ResultCoord = TestEnterShipDirect(ShipType, 1, 0, X, Y);
 
-                    if(ResultCoord == null)
+                    if (ResultCoord == null)
                     {
                         ResultCoord = TestEnterShipDirect(ShipType, -1, 0, X, Y);
                     }
 
                     break;
+
                 case 1:
                     ResultCoord = TestEnterShipDirect(ShipType, 0, 1, X, Y);
 
@@ -286,16 +296,18 @@ public class GamePole : MonoBehaviour
             return ResultCoord;
         }
 
-       return null;
+        return null;
     }
 
-    bool EnterDeck(int ShipType, int Direct, int X, int Y)
+    private bool EnterDeck(int ShipType, int Direct, int X, int Y)
     {
         TestCoord[] P = TestEnterShip(ShipType, Direct, X, Y);
 
-        if (P != null) {
-            foreach(TestCoord T in P) {
-                Pole[T.X, T.Y].GetComponent<Chanks>().index = 1;
+        if (P != null)
+        {
+            foreach (TestCoord T in P)
+            {
+                Cells[T.X, T.Y].GetComponent<Chanks>().index = 1;
             }
 
             Ship Deck;
@@ -310,31 +322,32 @@ public class GamePole : MonoBehaviour
         return false;
     }
 
-    bool TestShoot(int X, int Y)
+    private bool TestShoot(int X, int Y)
     {
         bool Result = false;
 
-        foreach(Ship Test in ListShip)
+        foreach (Ship Test in ListShip)
         {
             foreach (TestCoord Paluba in Test.ShipCoord)
             {
                 if ((Paluba.X == X) && (Paluba.Y == Y))
                 {
                     int CountKill = 0;
-                    foreach(TestCoord KillPaluba in Test.ShipCoord)
+                    foreach (TestCoord KillPaluba in Test.ShipCoord)
                     {
-                        int TestBlock = Pole[KillPaluba.X, KillPaluba.Y].GetComponent<Chanks>().index;
+                        int TestBlock = Cells[KillPaluba.X, KillPaluba.Y].GetComponent<Chanks>().index;
 
-                        if(TestBlock == 3)
+                        if (TestBlock == 3)
                         {
                             CountKill++;
                         }
                     }
 
-                    if(CountKill == Test.ShipCoord.Length)
+                    if (CountKill == Test.ShipCoord.Length)
                     {
                         Result = true;
-                    } else
+                    }
+                    else
                     {
                         Result = false;
                     }
@@ -351,9 +364,9 @@ public class GamePole : MonoBehaviour
 
         foreach (Ship Test in ListShip)
         {
-            foreach(TestCoord Paluba in Test.ShipCoord)
+            foreach (TestCoord Paluba in Test.ShipCoord)
             {
-                int TestBlock = Pole[Paluba.X, Paluba.Y].GetComponent<Chanks>().index;
+                int TestBlock = Cells[Paluba.X, Paluba.Y].GetComponent<Chanks>().index;
             }
         }
 

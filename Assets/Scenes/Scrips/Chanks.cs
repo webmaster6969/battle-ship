@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Chanks : MonoBehaviour
@@ -10,20 +8,20 @@ public class Chanks : MonoBehaviour
     //  аждый раз при отрисовки сцены, присваиваем правильное изоброжение пол€
     public void ChangeImgs()
     {
-        if(imgs.Length > index)
+        if (imgs.Length > index)
         {
             GetComponent<SpriteRenderer>().sprite = imgs[index];
         }
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         ChangeImgs();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         ChangeImgs();
     }
