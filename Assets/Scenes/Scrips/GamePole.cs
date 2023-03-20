@@ -19,8 +19,9 @@ public class GamePole : MonoBehaviour
 
     // Массивы символов и ячеек для отображения
     private GameObject[] Liters;
-
     private GameObject[] Nums;
+
+    // Общий подчет, сколько палуб живо на данном полотне
     public int LifeShip()
     {
         int countLife = 0;
@@ -61,6 +62,7 @@ public class GamePole : MonoBehaviour
         }
     }
 
+    // Считаем если ли еще не израсходованные корабли для установки
     private bool CountShips()
     {
         int Amaunt = 0;
@@ -78,18 +80,23 @@ public class GamePole : MonoBehaviour
         return false;
     }
 
+    // Создаем основной полотно
     private void CreatePole()
     {
+        // От какой точки будем отолкиваться для создания полотна
         Vector3 StartPoze = transform.position;
 
         float XX = StartPoze.x + 1;
         float YY = StartPoze.y - 1;
 
+        // Выделяем память для символов
         Liters = new GameObject[lengCells];
         Nums = new GameObject[lengCells];
 
+        // Выделяем память для ячеек
         Cells = new GameObject[10, 10];
 
+        // Расставляем символы
         for (int Nadpis = 0; Nadpis < lengCells; Nadpis++)
         {
             Liters[Nadpis] = Instantiate(eLiters);
@@ -106,6 +113,7 @@ public class GamePole : MonoBehaviour
         XX = StartPoze.x + 1;
         YY = StartPoze.y - 1;
 
+        // Раставляем основные ячейки
         for (int Y = 0; Y < lengCells; Y++)
         {
             for (int X = 0; X < lengCells; X++)
@@ -123,12 +131,19 @@ public class GamePole : MonoBehaviour
         }
     }
 
+    // Устанавливаем корабль с текущей клетки
     private bool EnterDeck(int ShipType, int Direct, int X, int Y)
     {
+
+        // Пытаемся устанавить все палубы в клетки
         TestCoord[] P = TestEnterShip(ShipType, Direct, X, Y);
 
+
+        // Если установка удачна, значит заполняем основной массив и меняем значения ячеек на другие спрайты и статусы
         if (P != null)
         {
+
+            // Перебираем все ячейки и ставим статус который меняет так же спрайт
             foreach (TestCoord T in P)
             {
                 Cells[T.X, T.Y].GetComponent<Chanks>().index = 1;
@@ -172,8 +187,10 @@ public class GamePole : MonoBehaviour
             // Проверяем, встанет ли корабль правильно в выбранное поле
             if (EnterDeck(SelectShip, Direct, X, Y))
             {
+                // Уменьшаем основной массив, пока совсем не закончится
                 ShipCount[SelectShip]--;
 
+                // Если все корабли данного типа закончились, выбираем следующий типа
                 if (ShipCount[SelectShip] == 0)
                 {
                     SelectShip--;
@@ -185,12 +202,16 @@ public class GamePole : MonoBehaviour
     // Реакция на выстрел
     private bool Shoot(int X, int Y)
     {
+        // Выбираем ячейку
         GameObject cellSelect = Cells[X, Y];
+
         // Выбираем ячейку по которому сделан выстрел
         int PoleSelect = cellSelect.GetComponent<Chanks>().index;
+
+        // Устанавливаем результат в лож
         bool Result = false;
 
-        // Анализируем и задаем статус ячейки в зависемости от типа поля
+        // Анализируем и задаем статус ячейки в зависемости от типа ячейки
         switch (PoleSelect)
         {
             case 0: // Пустая ячейка, ставим промах
@@ -218,7 +239,10 @@ public class GamePole : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        // Чистим ячейки (ставим на изначальное значение)
         CreatePole();
+
+        // Создаем корабли
         EnterRandomShip();
     }
 
@@ -261,6 +285,7 @@ public class GamePole : MonoBehaviour
         return false;
     }
 
+    // Устанавливаем корабль в зависимости от типа и направления
     private TestCoord[] TestEnterShip(int ShipType, int Direct, int X, int Y)
     {
         TestCoord[] ResultCoord = new TestCoord[ShipType];
@@ -271,8 +296,11 @@ public class GamePole : MonoBehaviour
             switch (Direct)
             {
                 case 0:
+
+                    // Пытаемся поставить корабль
                     ResultCoord = TestEnterShipDirect(ShipType, 1, 0, X, Y);
 
+                    // Если не вышло, ставим на 90 градусов по другом
                     if (ResultCoord == null)
                     {
                         ResultCoord = TestEnterShipDirect(ShipType, -1, 0, X, Y);
@@ -297,12 +325,18 @@ public class GamePole : MonoBehaviour
         return null;
     }
 
+
+    // Проверяем можем ли разметить корабль с данной клетки
     private TestCoord[] TestEnterShipDirect(int ShipType, int XD, int YD, int X, int Y)
     {
+        // Выделяем память под конкретный типа карабля
         TestCoord[] ResultCoord = new TestCoord[ShipType];
 
+
+        // Проходим по всем ячейкам
         for (int P = 0; P < ShipType; P++)
         {
+            // Если ячейка свободна, тогда ставим в нее часть коробля
             if (TestEnterDeck(X, Y))
             {
                 ResultCoord[P].X = X;
@@ -313,6 +347,7 @@ public class GamePole : MonoBehaviour
                 return null;
             }
 
+            // Ввигаемся в направлении которое было передано в процедуру генерации
             X += XD;
             Y += YD;
         }
@@ -320,17 +355,24 @@ public class GamePole : MonoBehaviour
         return ResultCoord;
     }
 
+    // Проверка на убийство коробля
     private bool TestShoot(int X, int Y)
     {
         bool Result = false;
 
+        // Идем по всем короблям
         foreach (Ship Test in ListShip)
         {
+
+            // Идем по конкретному кораблю
             foreach (TestCoord Paluba in Test.ShipCoord)
             {
+
+                // Если клетка которая подверглась выстрелу содержит корабль, тогда мы пытаемся узнать жив ли корабль
                 if ((Paluba.X == X) && (Paluba.Y == Y))
                 {
                     int CountKill = 0;
+                    // Проверяем Выбранный корабль на все мертвые точки
                     foreach (TestCoord KillPaluba in Test.ShipCoord)
                     {
                         int TestBlock = Cells[KillPaluba.X, KillPaluba.Y].GetComponent<Chanks>().index;
@@ -341,6 +383,8 @@ public class GamePole : MonoBehaviour
                         }
                     }
 
+
+                    // Если мервых точек столько же, сколько палуб у коробля, тогда корабль признаем мертвым
                     if (CountKill == Test.ShipCoord.Length)
                     {
                         Result = true;
