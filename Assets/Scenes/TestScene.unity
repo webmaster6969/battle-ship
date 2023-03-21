@@ -207,6 +207,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &783625307 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4498559682315477966, guid: 49d5a6ff962a3eb46baf9587e3a80341, type: 3}
+  m_PrefabInstance: {fileID: 1108617542316859866}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &783625311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 783625307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b0b5f3f221f5464ca2f4058947f53ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Width: 10
+  Height: 10
+  eLiters: {fileID: 2576775692957580132, guid: 0b1b34aba7b63d44aab9c143478c4635, type: 3}
+  eNums: {fileID: 447191292255186073, guid: 33701bc27559c564db7c48b518e2cd89, type: 3}
+  eCells: {fileID: 6568545058698688546, guid: 015faca572238af43953d38dc1a81a6c, type: 3}
 --- !u!1001 &1108617542316859866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -261,6 +283,10 @@ PrefabInstance:
     - target: {fileID: 4498559682315477966, guid: 49d5a6ff962a3eb46baf9587e3a80341, type: 3}
       propertyPath: m_Name
       value: MapGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4498559682315477967, guid: 49d5a6ff962a3eb46baf9587e3a80341, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 49d5a6ff962a3eb46baf9587e3a80341, type: 3}
