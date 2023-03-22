@@ -6,7 +6,7 @@ public class PlayingField: MonoBehaviour
 {
 
     // Массив ячеек игрового поля
-    private List<Cell> ListCellSea = new List<Cell>();
+    private List<Cell> ListCell = new List<Cell>();
 
     // Ширина и высота
     public int Width, Height;
@@ -29,15 +29,24 @@ public class PlayingField: MonoBehaviour
     // Генерация игровых ячеек
     public void GenerationPlayingFieldSea()
     {
+        // Получаем стартовую позицию
         Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
+
+        // Генерируем игровые ячейки
         for (int y = 0; y < Height; y++) 
         {
             for (int x = 0; x < Width; x++)
             {
-                ListCellSea.Add(
+                GameObject cell = Instantiate(eCells);
+                cell.GetComponent<ClickPole>().whoPerent = this.gameObject;
+                cell.GetComponent<ClickPole>().coordX = StartPosition.x + x;
+                cell.GetComponent<ClickPole>().CoordY = StartPosition.y - y - 1;
+
+
+                ListCell.Add(
                     new CellEmpty(
-                            Instantiate(eCells),
+                            cell,
                             new Vector2Int(StartPosition.x + x, StartPosition.y - y - 1),
                             0
                         )
@@ -49,33 +58,38 @@ public class PlayingField: MonoBehaviour
     // Генерация надписей
     public void GenerationPlayingFieldSymbol()
     {
+        // Получаем стартовую позицию
         Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
+        // Генерируем цифры
         for (int y = 0; y < Height; y++)
         {
-            ListCellSea.Add(new CellSymbol(Instantiate(eNums), new Vector2Int(StartPosition.x - 1, StartPosition.y - 1 - y), y));
+            ListCell.Add(new CellSymbol(Instantiate(eNums), new Vector2Int(StartPosition.x - 1, StartPosition.y - 1 - y), y));
         }
 
+        // Генерируем буквы
         for (int x = 0; x < Width; x++)
         {
-            ListCellSea.Add(new CellSymbol(Instantiate(eLiters), new Vector2Int(StartPosition.x + x, StartPosition.y), x));
+            ListCell.Add(new CellSymbol(Instantiate(eLiters), new Vector2Int(StartPosition.x + x, StartPosition.y), x));
         }
     }
 
+    // События на нажатие на поле
     public void WhoClick(int x, int y)
     {
-        Cell ship = ListCellSea.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_SHIP);
+        Debug.Log("Send WhoClick X: " + x + " Y: " + y);
+        Cell ship = ListCell.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_SHIP);
 
         if ( ship != null )
         {
-
+            Debug.Log("Click CELL_SHIP");
         }
 
-        Cell empty = ListCellSea.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_EMPTY);
+        Cell empty = ListCell.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_EMPTY);
 
         if (empty != null)
         {
-
+            Debug.Log("Click CELL_SHIP");
         }
     }
 }

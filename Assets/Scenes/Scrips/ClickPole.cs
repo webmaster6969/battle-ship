@@ -21,7 +21,7 @@ public class ClickPole : MonoBehaviour
     {
         if (whoPerent != null)
         {
-            whoPerent.GetComponent<GamePole>().WhoClick(coordX, CoordY);
+            whoPerent.GetComponent<PlayingField>().WhoClick(coordX, CoordY);
         }
     }
 }
