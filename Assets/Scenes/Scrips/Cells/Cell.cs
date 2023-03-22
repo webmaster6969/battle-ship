@@ -49,12 +49,18 @@ public class Cell
         this.Status = status;
     }
 
-    public Cell(GameObject gameObject, Vector2Int pos, int indexSprite)
+    public void SetIndexSprite(int indexSprite)
+    {
+        this.IndexSprite = indexSprite;
+        this.GameObject.GetComponent<Chanks>().index = indexSprite;
+    }
+
+        public Cell(GameObject gameObject, Vector2Int pos, int indexSprite)
     {
         this.Position = pos;
         this.GameObject = gameObject;
         this.GameObject.transform.position = new Vector3(Position.x, Position.y, 0);
         this.IndexSprite = indexSprite;
-        gameObject.GetComponent<Chanks>().index = indexSprite;
+        this.GameObject.GetComponent<Chanks>().index = indexSprite;
     }
 }
