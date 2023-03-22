@@ -17,6 +17,8 @@ public class PlayingField: MonoBehaviour
     }*/
 
 
+    public List<Cell> GetListCell() { return ListCell; }
+
     public void Start()
     {
         this.GenerationPlayingFieldSea();
@@ -42,6 +44,11 @@ public class PlayingField: MonoBehaviour
                 }
                 
             }
+        }
+
+        if (this.GetComponent<GameEvent>() != null)
+        {
+            this.GetComponent<GameEvent>().SetPlayingField(this);
         }
 
     }
@@ -106,18 +113,11 @@ public class PlayingField: MonoBehaviour
     public void WhoClick(int x, int y)
     {
         Debug.Log("Send WhoClick X: " + x + " Y: " + y);
-        Cell ship = ListCell.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_SHIP);
 
-        if ( ship != null )
+        if(this.GetComponent<GameEvent>() != null)
         {
-            Debug.Log("Click CELL_SHIP");
+            this.GetComponent<GameEvent>().WhoClick(x, y);
         }
-
-        Cell empty = ListCell.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_EMPTY);
-
-        if (empty != null)
-        {
-            Debug.Log("Click CELL_SHIP");
-        }
+        
     }
 }
