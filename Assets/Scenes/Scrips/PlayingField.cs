@@ -24,12 +24,15 @@ public class PlayingField: MonoBehaviour
         this.GenerationPlayingFieldSea();
         this.GenerationPlayingFieldSymbol();
 
+        // Генерируем корабли на поле
         GenerationShip generationShip = new GenerationShip();
         int[,] ships = generationShip.Generation(10);
 
         // Получаем стартовую позицию
         Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
+
+        // Расставляем коробли на доску
         for (int x = 0; x < 10; x++)
         {
             for (int y = 0; y < 10; y++)

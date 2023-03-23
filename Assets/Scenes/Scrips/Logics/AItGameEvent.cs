@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class ClientGameEvent : GameEvent
+public class AItGameEvent : GameEvent
 {
 
-    public ClientGameEvent(string Type)
+    public AItGameEvent(string Type)
     {
         this.type = Type;
     }
 
+
     public override void WhoClick(int x, int y)
     {
 
-        if (Status != STATUS_NOT_STEP_MADE)
+        if(Status != STATUS_NOT_STEP_MADE)
         {
             return;
         }
@@ -39,12 +39,11 @@ public class ClientGameEvent : GameEvent
         }
     }
 
-    public void Update(DataObserver data)
+
+    public override int UpdateGame()
     {
-        if(data.TypeMessage == DataObserver.WHO_CLICK)
-        {
-            Vector2Int click = (Vector2Int)data.Data;
-            this.WhoClick(click.x, click.y);
-        }
+        this.GetComponentInParent<ApplicationGame>().MapGameClient.GetComponent<GameEvent>().WhoClick(UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10));
+        //this.WhoClick(UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10));
+        return Status;
     }
 }
