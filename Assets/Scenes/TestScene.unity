@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0b5f3f221f5464ca2f4058947f53ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypePlayingField: Client
   Width: 10
   Height: 10
   eLiters: {fileID: 2576775692957580132, guid: 0b1b34aba7b63d44aab9c143478c4635, type: 3}
@@ -263,8 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28efb99150c702249a51caa1d1caa5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapGameClient: {fileID: 783625307}
-  MapGameAI: {fileID: 1144294448}
   Status: 0
 --- !u!4 &1140465011
 Transform:
@@ -300,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b0b5f3f221f5464ca2f4058947f53ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TypePlayingField: AI
   Width: 10
   Height: 10
   eLiters: {fileID: 2576775692957580132, guid: 0b1b34aba7b63d44aab9c143478c4635, type: 3}

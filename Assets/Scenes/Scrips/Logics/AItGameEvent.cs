@@ -18,9 +18,11 @@ public class AItGameEvent : GameEvent
             return;
         }
 
+        PlayingField pf = playingField.GetComponent<PlayingField>();
+
         Status = STATUS_STEP_MADE;
 
-        Cell ship = playingField.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_SHIP);
+        Cell ship = pf.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_SHIP);
 
         if (ship != null)
         {
@@ -29,7 +31,7 @@ public class AItGameEvent : GameEvent
             Debug.Log("Click CELL_SHIP");
         }
 
-        Cell empty = playingField.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_EMPTY);
+        Cell empty = pf.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_EMPTY);
 
         if (empty != null)
         {
@@ -39,10 +41,18 @@ public class AItGameEvent : GameEvent
         }
     }
 
+    public override void Update(DataObserver data)
+    {
+        if (data.TypeMessage == DataObserver.WHO_CLICK)
+        {
+            Vector2Int click = (Vector2Int)data.Data;
+            this.WhoClick(click.x, click.y);
+        }
+    }
 
     public override int UpdateGame()
     {
-        this.GetComponentInParent<ApplicationGame>().MapGameClient.GetComponent<GameEvent>().WhoClick(UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10));
+        //this.GetComponentInParent<ApplicationGame>().MapGameClient.GetComponent<GameEvent>().WhoClick(UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10));
         //this.WhoClick(UnityEngine.Random.Range(0, 10), UnityEngine.Random.Range(0, 10));
         return Status;
     }

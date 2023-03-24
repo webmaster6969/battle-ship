@@ -5,9 +5,14 @@ public struct DataObserver
 {
     public const int WHO_CLICK = 1;
 
+    public DataObserver(int TypeMessage, object Data)
+    {
+        this.Data = Data;
+        this.TypeMessage = TypeMessage;
+    }
 
     public object Data { get; set; }
-    public double TypeMessage { get; set; }
+    public int TypeMessage { get; set; }
 }
 
 public interface IObserver

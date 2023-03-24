@@ -18,9 +18,11 @@ public class ClientGameEvent : GameEvent
             return;
         }
 
+        PlayingField pf = playingField.GetComponent<PlayingField>();
+
         Status = STATUS_STEP_MADE;
 
-        Cell ship = playingField.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_SHIP);
+        Cell ship = pf.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_SHIP);
 
         if (ship != null)
         {
@@ -29,7 +31,7 @@ public class ClientGameEvent : GameEvent
             Debug.Log("Click CELL_SHIP");
         }
 
-        Cell empty = playingField.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_EMPTY);
+        Cell empty = pf.GetListCell().Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y && cell.GetStatus() == Cell.CELL_EMPTY);
 
         if (empty != null)
         {
@@ -39,7 +41,7 @@ public class ClientGameEvent : GameEvent
         }
     }
 
-    public void Update(DataObserver data)
+    public override void Update(DataObserver data)
     {
         if(data.TypeMessage == DataObserver.WHO_CLICK)
         {

@@ -7,5 +7,5 @@ public interface ISubject
     void Detach(IObserver observer);
 
     // Уведомляет всех наблюдателей о событии.
-    void Notify(string Type);
+    void Notify(string Type, DataObserver data);
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameEvent : IObserver
 {
 
-    protected PlayingField playingField;
+    protected GameObject playingField;
 
     protected string type;
 
@@ -14,7 +14,7 @@ public class GameEvent : IObserver
 
     protected int Status = STATUS_NOT_STEP_MADE;
 
-    public void SetPlayingField(PlayingField playingField) { 
+    public void SetPlayingField(GameObject playingField) { 
         this.playingField = playingField;
     }
 
@@ -38,7 +38,7 @@ public class GameEvent : IObserver
         return type;
     }
 
-    public void Update(DataObserver data)
+    public virtual void Update(DataObserver data)
     {
         throw new System.NotImplementedException();
     }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayingField: MonoBehaviour
 {
 
+    public string TypePlayingField;
+
     // Массив ячеек игрового поля
     private List<Cell> ListCell = new List<Cell>();
 
@@ -47,11 +49,6 @@ public class PlayingField: MonoBehaviour
                 }
                 
             }
-        }
-
-        if (this.GetComponent<GameEvent>() != null)
-        {
-            this.GetComponent<GameEvent>().SetPlayingField(this);
         }
 
     }
@@ -117,9 +114,9 @@ public class PlayingField: MonoBehaviour
     {
         Debug.Log("Send WhoClick X: " + x + " Y: " + y);
 
-        if(this.GetComponent<GameEvent>() != null)
+        if(this.GetComponentInParent<ApplicationGame>() != null)
         {
-            this.GetComponent<GameEvent>().WhoClick(x, y);
+            this.GetComponentInParent<ApplicationGame>().WhoClick(TypePlayingField, x, y);
         }
         
     }
