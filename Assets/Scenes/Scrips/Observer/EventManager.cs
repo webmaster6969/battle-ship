@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class EventManager: ISubject
+public class EventManager: MonoBehaviour
 {
 
     private List<IObserver> _observers = new List<IObserver>();
@@ -10,8 +10,13 @@ public class EventManager: ISubject
     // Методы управления подпиской.
     public void Attach(IObserver observer)
     {
-        Console.WriteLine("Subject: Attached an observer.");
+        Debug.Log("Subject: Attached an observer.");
         this._observers.Add(observer);
+    }
+
+    public void Start()
+    {
+        
     }
 
     public void Detach(IObserver observer)
@@ -23,7 +28,7 @@ public class EventManager: ISubject
     // Запуск обновления в каждом подписчике.
     public void Notify(string Type, DataObserver data)
     {
-        Console.WriteLine("Subject: Notifying observers...");
+        Debug.Log("Subject: Notifying observers...");
         
         foreach (var observer in _observers.FindAll(o => o.GetType() == Type))
         {

@@ -5,33 +5,18 @@ using UnityEngine;
 public class GameEvent : IObserver
 {
 
-    protected GameObject playingField;
+    protected ApplicationGame ApplicationGame;
+    protected IState State;
 
     protected string type;
 
-    public const int STATUS_NOT_STEP_MADE = 0;
-    public const int STATUS_STEP_MADE = 1;
-
-    protected int Status = STATUS_NOT_STEP_MADE;
-
-    public void SetPlayingField(GameObject playingField) { 
-        this.playingField = playingField;
-    }
-
-    public void SetStatus(int Status)
+    public GameEvent(ApplicationGame ApplicationGame)
     {
-        this.Status = Status;
+        this.ApplicationGame = ApplicationGame;
+        type = "GameEvents";
+        State = new StepClient(ApplicationGame);
     }
 
-    public virtual int UpdateGame()
-    {
-        return Status;
-    }
-
-    public virtual void WhoClick(int x, int y)
-    {
-        
-    }
 
     string IObserver.GetType()
     {
@@ -40,6 +25,12 @@ public class GameEvent : IObserver
 
     public virtual void Update(DataObserver data)
     {
-        throw new System.NotImplementedException();
+        if(data.TypeMessage == DataObserver.WHO_CLICK)
+        {
+            Vector2Int v = (Vector2Int)data.Data;
+            State.WhoClick(v.x, v.y);
+            State = new StepAI(ApplicationGame);
+        }
+        //throw new System.NotImplementedException();
     }
 }

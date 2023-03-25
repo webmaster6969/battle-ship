@@ -121,7 +121,7 @@ public class GamePole : MonoBehaviour
                 Cells[X, Y] = Instantiate(ePole);
                 Cells[X, Y].GetComponent<Chanks>().index = 0;
                 Cells[X, Y].transform.position = new Vector3(XX, YY, StartPoze.z);
-                Cells[X, Y].GetComponent<ClickPole>().whoPerent = this.gameObject;
+                //Cells[X, Y].GetComponent<ClickPole>().whoPerent = this.gameObject;
                 Cells[X, Y].GetComponent<ClickPole>().coordX = X;
                 Cells[X, Y].GetComponent<ClickPole>().CoordY = Y;
                 XX++;

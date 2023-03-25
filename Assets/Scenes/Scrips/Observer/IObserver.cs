@@ -4,6 +4,7 @@ using UnityEngine;
 public struct DataObserver
 {
     public const int WHO_CLICK = 1;
+    public const int CHANGE_STATE = 2;
 
     public DataObserver(int TypeMessage, object Data)
     {

@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class PlayingField: MonoBehaviour
 {
+
+    // Массивы символов, цифр и ячеек для отображения
+    public GameObject eLiters, eNums, eCells;
 
     public string TypePlayingField;
 
@@ -53,9 +58,6 @@ public class PlayingField: MonoBehaviour
 
     }
 
-    // Массивы символов, цифр и ячеек для отображения
-    public GameObject eLiters, eNums, eCells;
-
     // Генерация игровых ячеек
     public void GenerationPlayingFieldSea()
     {
@@ -70,7 +72,7 @@ public class PlayingField: MonoBehaviour
             {
                 GameObject cell = Instantiate(eCells);
                 cell.transform.SetParent(this.transform, false);
-                cell.GetComponent<ClickPole>().whoPerent = this.gameObject;
+                //cell.GetComponent<ClickPole>().whoPerent = this.gameObject;
                 cell.GetComponent<ClickPole>().coordX = StartPosition.x + x;
                 cell.GetComponent<ClickPole>().CoordY = StartPosition.y - y - 1;
 
@@ -109,15 +111,39 @@ public class PlayingField: MonoBehaviour
         }
     }
 
-    // События на нажатие на поле
-    public void WhoClick(int x, int y)
+    // Изменение в ячейки
+    public void ChangeCell(int Status, int x, int y)
     {
-        Debug.Log("Send WhoClick X: " + x + " Y: " + y);
+        Vector2Int CellPos = GetRealCoordinateCell(x, y);
+        Debug.Log("HittingCell X: " + CellPos.x + " Y: " + CellPos.y);
 
-        if(this.GetComponentInParent<ApplicationGame>() != null)
+        Cell cell = ListCell.Find(cell => cell.GetPosition().x == CellPos.x && cell.GetPosition().y == CellPos.y && cell.GetStatus() == Cell.CELL_EMPTY);
+        if (cell != null)
         {
-            this.GetComponentInParent<ApplicationGame>().WhoClick(TypePlayingField, x, y);
+            cell.SetStatus(Status);
+            cell.SetIndexSprite(Status);
         }
+
+    }
+
+    // Поулчение ячейки
+    public Cell GetCell(int x, int y)
+    {
         
+
+        Vector2Int CellPos = GetRealCoordinateCell(x, y);
+        Debug.Log("HittingCell X: " + CellPos.x + " Y: " + CellPos.y);
+
+        return ListCell.Find(cell => cell.GetPosition().x == CellPos.x && cell.GetPosition().y == CellPos.y);
+    }
+
+    // Получение реальных координат ячейки
+    private Vector2Int GetRealCoordinateCell(int x, int y)
+    {
+        Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+        int readX = StartPosition.x + x;
+        int readY = StartPosition.y - y - 1;
+
+        return new Vector2Int(readX, readY);
     }
 }
