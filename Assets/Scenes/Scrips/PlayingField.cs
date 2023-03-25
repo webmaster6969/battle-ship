@@ -114,10 +114,10 @@ public class PlayingField: MonoBehaviour
     // »зменение в €чейки
     public void ChangeCell(int Status, int x, int y)
     {
-        Vector2Int CellPos = GetRealCoordinateCell(x, y);
-        Debug.Log("HittingCell X: " + CellPos.x + " Y: " + CellPos.y);
+        //Vector2Int CellPos = GetRealCoordinateCell(x, y);
+       // Debug.Log("HittingCell X: " + CellPos.x + " Y: " + CellPos.y);
 
-        Cell cell = ListCell.Find(cell => cell.GetPosition().x == CellPos.x && cell.GetPosition().y == CellPos.y && cell.GetStatus() == Cell.CELL_EMPTY);
+        Cell cell = ListCell.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y);
         if (cell != null)
         {
             cell.SetStatus(Status);
@@ -127,14 +127,21 @@ public class PlayingField: MonoBehaviour
     }
 
     // ѕоулчение €чейки
-    public Cell GetCell(int x, int y)
+    public Cell GetCell(int x, int y, bool convertCoord = false)
     {
+        int realX = x, realY = y;
+        Debug.Log("HittingCell X: " + realX + " Y: " + realY);
+        if (convertCoord)
+        {
+            Vector2Int CellPos = GetRealCoordinateCell(x, y);
+            realX = CellPos.x;
+            realY = CellPos.y;
+            Debug.Log("HittingCell(Convert) X: " + realX + " Y: " + realY);
+        }
+        
         
 
-        Vector2Int CellPos = GetRealCoordinateCell(x, y);
-        Debug.Log("HittingCell X: " + CellPos.x + " Y: " + CellPos.y);
-
-        return ListCell.Find(cell => cell.GetPosition().x == CellPos.x && cell.GetPosition().y == CellPos.y);
+        return ListCell.Find(cell => cell.GetPosition().x == realX && cell.GetPosition().y == realY);
     }
 
     // ѕолучение реальных координат €чейки

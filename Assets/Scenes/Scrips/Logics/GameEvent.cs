@@ -29,8 +29,17 @@ public class GameEvent : IObserver
         {
             Vector2Int v = (Vector2Int)data.Data;
             State.WhoClick(v.x, v.y);
-            State = new StepAI(ApplicationGame);
         }
         //throw new System.NotImplementedException();
+    }
+
+    public IState GetState()
+    {
+        return this.State;
+    }
+
+    public void SetState(IState State)
+    {
+        this.State = State;
     }
 }

@@ -22,7 +22,7 @@ public class ClickPole : MonoBehaviour
         
         if (EventManager != null)
         {
-            EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.WHO_CLICK, new Vector2Int(CoordY, CoordY)));
+            EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.WHO_CLICK, new Vector2Int(coordX, CoordY)));
         }
     }
 }

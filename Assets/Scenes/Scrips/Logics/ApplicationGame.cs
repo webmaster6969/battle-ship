@@ -15,16 +15,9 @@ public class ApplicationGame : MonoBehaviour
     // Игровое поле AI
     public PlayingField PlayingFieldAI;
 
-    // Ход клиента
-    public const int STATUS_STEP_CLIENT = 1;
-
-    public const int STATUS_STEP_AI = 2;
-
     // Управление подписками
     public GameObject EventManager;
 
-    // Статус игры
-    public int Status;
 
 
     // Start is called before the first frame update
@@ -32,26 +25,31 @@ public class ApplicationGame : MonoBehaviour
     {
         GameEvent = new GameEvent(this);
         EventManager.GetComponent<EventManager>().Attach(GameEvent);
-        Status = STATUS_STEP_CLIENT;
     }
 
     public void WhoClickClient(int x, int y)
     {
-        Cell cell = PlayingFieldClient.GetCell(x, y);
-
+        Cell cell = PlayingFieldClient.GetCell(x, y, true);
+    
         if (cell != null)
         {
             switch (cell.GetStatus())
             {
                 case Cell.CELL_EMPTY:
-                    PlayingFieldClient.ChangeCell(Cell.CELL_MISS, x, y);
+                    PlayingFieldClient.ChangeCell(Cell.CELL_MISS, cell.GetPosition().x, cell.GetPosition().y);
+                    break;
+                case Cell.CELL_SHIP:
+                    PlayingFieldClient.ChangeCell(Cell.CELL_HIT, cell.GetPosition().x, cell.GetPosition().y);
                     break;
             }
         }
+
+        GameEvent.SetState(new StepClient(this));
     }
 
     public void WhoClickAI(int x, int y)
     {
+        GameEvent.SetState(new StepAI(this));
         Cell cell = PlayingFieldAI.GetCell(x, y);
 
         if(cell != null)
@@ -60,8 +58,13 @@ public class ApplicationGame : MonoBehaviour
                 case Cell.CELL_EMPTY:
                     PlayingFieldAI.ChangeCell(Cell.CELL_MISS, x, y);
                     break;
+                case Cell.CELL_SHIP:
+                    PlayingFieldAI.ChangeCell(Cell.CELL_HIT, x, y);
+                    break;
             }
         }
+
+        this.WhoClickClient(Random.Range(0, 10), Random.Range(0, 10));
 
         
       //  MapGameAI.GetComponent<GameEvent>().SetStatus(GameEvent.STATUS_NOT_STEP_MADE);

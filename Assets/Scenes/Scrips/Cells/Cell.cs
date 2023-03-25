@@ -37,7 +37,7 @@ public class Cell
     // indes Спрайта в gameObject
     private int IndexSprite;
 
-    public Vector2 GetPosition() { return Position; }
+    public Vector2Int GetPosition() { return Position; }
 
     public int GetStatus() { return Status; }
 

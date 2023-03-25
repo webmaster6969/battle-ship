@@ -12,7 +12,7 @@ public class StepAI : IState
 
     public void WhoClick(int x, int y)
     {
-        Debug.Log("StepAI WhoClick");
-        ApplicationGame.WhoClickClient(x, y);
+        //Debug.Log("StepAI WhoClick");
+        //ApplicationGame.WhoClickClient(x, y);
     }
 }

@@ -22,4 +22,7 @@ public interface IObserver
 
     // Получает обновление от издателя
     void Update(DataObserver data);
+
+    public IState GetState();
+    public void SetState(IState State);
 }
