@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class ApplicationGame : MonoBehaviour
 {
-
-    // Игровые события
-    public GameEvent GameEvent;
-
     // Игровое поле клиента
     public PlayingField PlayingFieldClient;
 
@@ -23,8 +19,7 @@ public class ApplicationGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameEvent = new GameEvent(this);
-        EventManager.GetComponent<EventManager>().Attach(GameEvent);
+        EventManager.GetComponent<EventManager>().Attach(new GameEvent(this));
     }
 
     public void WhoClickClient(int x, int y)
@@ -44,12 +39,13 @@ public class ApplicationGame : MonoBehaviour
             }
         }
 
-        GameEvent.SetState(new StepClient(this));
+        EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));
     }
 
+    // Удар по AI полю
     public void WhoClickAI(int x, int y)
     {
-        GameEvent.SetState(new StepAI(this));
+        EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepAI(this)));
         Cell cell = PlayingFieldAI.GetCell(x, y);
 
         if(cell != null)

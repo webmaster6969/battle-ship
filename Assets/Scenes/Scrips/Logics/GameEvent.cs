@@ -30,6 +30,12 @@ public class GameEvent : IObserver
             Vector2Int v = (Vector2Int)data.Data;
             State.WhoClick(v.x, v.y);
         }
+
+        if (data.TypeMessage == DataObserver.CHANGE_STATE)
+        {
+            SetState((IState)data.Data);
+        }
+
         //throw new System.NotImplementedException();
     }
 
