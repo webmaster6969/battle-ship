@@ -19,6 +19,12 @@ public class ApplicationGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GenerationPlayingField clientGen = new GenerationPlayingField(10, 10, new Vector2Int((int)PlayingFieldClient.transform.position.x, (int)PlayingFieldClient.transform.position.y));
+        clientGen.GenerationPlayingFieldSymbol();
+        clientGen.GenerationPlayingFieldSea();
+        clientGen.GenerationShipList();
+        PlayingFieldClient.SetListCell(clientGen.GetListCell());
+
         EventManager.GetComponent<EventManager>().Attach(new GameEvent(this));
     }
 
