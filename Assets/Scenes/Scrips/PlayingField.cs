@@ -10,8 +10,6 @@ public class PlayingField: MonoBehaviour
     // Массивы символов, цифр и ячеек для отображения
     public GameObject eLiters, eNums, eCells;
 
-    public string TypePlayingField;
-
     // Массив ячеек игрового поля
     private List<Cell> ListCell = new List<Cell>();
 
@@ -23,14 +21,20 @@ public class PlayingField: MonoBehaviour
         this.Height = height;
     }*/
 
-
+    // Поулчение список ячеек
     public List<Cell> GetListCell() { return ListCell; }
+
+    //public bool generationShip = false;
 
     public void Start()
     {
         this.GenerationPlayingFieldSea();
         this.GenerationPlayingFieldSymbol();
+        this.GenerationShipList();
+    }
 
+    public void GenerationShipList()
+    {
         // Генерируем корабли на поле
         GenerationShip generationShip = new GenerationShip();
         int[,] ships = generationShip.Generation(10);
@@ -40,9 +44,9 @@ public class PlayingField: MonoBehaviour
 
 
         // Расставляем коробли на доску
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < Width; x++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < Height; y++)
             {
                 int readX = StartPosition.x + x;
                 int readY = StartPosition.y - y - 1;
@@ -52,10 +56,9 @@ public class PlayingField: MonoBehaviour
                     cell.SetStatus(Cell.CELL_SHIP);
                     cell.SetIndexSprite(Cell.CELL_SHIP);
                 }
-                
+
             }
         }
-
     }
 
     // Генерация игровых ячеек
