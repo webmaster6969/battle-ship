@@ -251,6 +251,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &612078878
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 612078880}
+  - component: {fileID: 612078879}
+  m_Layer: 0
+  m_Name: CoreLogic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &612078879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612078878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e240020ffad72f48b5082430c2b66e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &612078880
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 612078878}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.426439, y: 4.9389324, z: -0.005448751}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &783625307 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4498559682315477966, guid: 49d5a6ff962a3eb46baf9587e3a80341, type: 3}
@@ -271,7 +315,6 @@ MonoBehaviour:
   eLiters: {fileID: 2576775692957580132, guid: 0b1b34aba7b63d44aab9c143478c4635, type: 3}
   eNums: {fileID: 447191292255186073, guid: 33701bc27559c564db7c48b518e2cd89, type: 3}
   eCells: {fileID: 1432881533}
-  TypePlayingField: Client
   Width: 10
   Height: 10
 --- !u!4 &783625314 stripped
@@ -311,7 +354,7 @@ MonoBehaviour:
   PlayingFieldClient: {fileID: 783625311}
   PlayingFieldAI: {fileID: 1144294449}
   EventManager: {fileID: 263833627}
-  Status: 0
+  coreLogic: {fileID: 612078879}
 --- !u!4 &1140465011
 Transform:
   m_ObjectHideFlags: 0
@@ -349,7 +392,6 @@ MonoBehaviour:
   eLiters: {fileID: 2576775692957580132, guid: 0b1b34aba7b63d44aab9c143478c4635, type: 3}
   eNums: {fileID: 447191292255186073, guid: 33701bc27559c564db7c48b518e2cd89, type: 3}
   eCells: {fileID: 1176622369}
-  TypePlayingField: AI
   Width: 10
   Height: 10
 --- !u!4 &1144294452 stripped
