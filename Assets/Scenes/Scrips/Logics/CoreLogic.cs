@@ -101,6 +101,13 @@ public class CoreLogic : MonoBehaviour
             case Cell.CELL_EMPTY:
                 stateGame.StateClient[x, y].SetStatus(Cell.CELL_MISS);
                 break;
+            case Cell.CELL_MISS:
+                this.MoveAI();
+                break;
+
+            case Cell.CELL_HIT:
+                this.MoveAI();
+                break;
             case Cell.CELL_SHIP:
                 stateGame.StateClient[x, y].SetStatus(Cell.CELL_HIT);
                 this.MoveAI();
