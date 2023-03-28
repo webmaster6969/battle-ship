@@ -20,7 +20,7 @@ public interface IObserver
 {
     string GetType();
 
-    // Получает обновление от издателя
+    // РџРѕР»СѓС‡Р°РµС‚ РѕР±РЅРѕРІР»РµРЅРёРµ РѕС‚ РёР·РґР°С‚РµР»СЏ
     void Update(DataObserver data);
 
     public IState GetState();

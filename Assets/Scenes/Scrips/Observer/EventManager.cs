@@ -7,7 +7,7 @@ public class EventManager: MonoBehaviour
 
     private List<IObserver> _observers = new List<IObserver>();
 
-    // Методы управления подпиской.
+    // РњРµС‚РѕРґС‹ СѓРїСЂР°РІР»РµРЅРёСЏ РїРѕРґРїРёСЃРєРѕР№.
     public void Attach(IObserver observer)
     {
         Debug.Log("Subject: Attached an observer.");
@@ -25,7 +25,7 @@ public class EventManager: MonoBehaviour
         Console.WriteLine("Subject: Detached an observer.");
     }
 
-    // Запуск обновления в каждом подписчике.
+    // Р—Р°РїСѓСЃРє РѕР±РЅРѕРІР»РµРЅРёСЏ РІ РєР°Р¶РґРѕРј РїРѕРґРїРёСЃС‡РёРєРµ.
     public void Notify(string Type, DataObserver data)
     {
         Debug.Log("Subject: Notifying observers...");

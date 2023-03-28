@@ -6,35 +6,35 @@ using UnityEngine;
 public class Cell
 {
 
-    // Все типы ячеек
+    // Р’СЃРµ С‚РёРїС‹ СЏС‡РµРµРє
 
-    // Ячейка содержит символы
+    // РЇС‡РµР№РєР° СЃРѕРґРµСЂР¶РёС‚ СЃРёРјРІРѕР»С‹
     public const int CELL_SYMBOL = -1;
 
-    // Пустая ячейка
+    // РџСѓСЃС‚Р°СЏ СЏС‡РµР№РєР°
     public const int CELL_EMPTY = 0;
 
-    // Ячейка с частью коробля
+    // РЇС‡РµР№РєР° СЃ С‡Р°СЃС‚СЊСЋ РєРѕСЂРѕР±Р»СЏ
     public const int CELL_SHIP = 1;
 
 
-    // Ячейка промаха по короблю
+    // РЇС‡РµР№РєР° РїСЂРѕРјР°С…Р° РїРѕ РєРѕСЂРѕР±Р»СЋ
     public const int CELL_MISS = 2;
 
-    // Ячейка попадания по короблю
+    // РЇС‡РµР№РєР° РїРѕРїР°РґР°РЅРёСЏ РїРѕ РєРѕСЂРѕР±Р»СЋ
     public const int CELL_HIT = 3;
 
 
-    // Объяет который находится на сцене
+    // РћР±СЉСЏРµС‚ РєРѕС‚РѕСЂС‹Р№ РЅР°С…РѕРґРёС‚СЃСЏ РЅР° СЃС†РµРЅРµ
     private GameObject GameObject;
 
-    // Позиция ячейки
+    // РџРѕР·РёС†РёСЏ СЏС‡РµР№РєРё
     private Vector2Int Position;
 
-    // Статус ячейки
+    // РЎС‚Р°С‚СѓСЃ СЏС‡РµР№РєРё
     private int Status;
 
-    // indes Спрайта в gameObject
+    // indes РЎРїСЂР°Р№С‚Р° РІ gameObject
     private int IndexSprite;
 
     public Vector2Int GetPosition() { return Position; }

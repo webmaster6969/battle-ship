@@ -5,13 +5,13 @@ using UnityEngine;
 
 public class ApplicationGame : MonoBehaviour
 {
-    // Игровое поле клиента
+    // РРіСЂРѕРІРѕРµ РїРѕР»Рµ РєР»РёРµРЅС‚Р°
     public PlayingField PlayingFieldClient;
 
-    // Игровое поле AI
+    // РРіСЂРѕРІРѕРµ РїРѕР»Рµ AI
     public PlayingField PlayingFieldAI;
 
-    // Управление подписками
+    // РЈРїСЂР°РІР»РµРЅРёРµ РїРѕРґРїРёСЃРєР°РјРё
     public GameObject EventManager;
 
 
@@ -19,11 +19,11 @@ public class ApplicationGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GenerationPlayingField clientGen = new GenerationPlayingField(10, 10, new Vector2Int((int)PlayingFieldClient.transform.position.x, (int)PlayingFieldClient.transform.position.y));
+        /*GenerationPlayingField clientGen = new GenerationPlayingField(10, 10, new Vector2Int((int)PlayingFieldClient.transform.position.x, (int)PlayingFieldClient.transform.position.y));
         clientGen.GenerationPlayingFieldSymbol();
         clientGen.GenerationPlayingFieldSea();
         clientGen.GenerationShipList();
-        PlayingFieldClient.SetListCell(clientGen.GetListCell());
+        PlayingFieldClient.SetListCell(clientGen.GetListCell());*/
 
         EventManager.GetComponent<EventManager>().Attach(new GameEvent(this));
     }
@@ -48,7 +48,7 @@ public class ApplicationGame : MonoBehaviour
         EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));
     }
 
-    // Удар по AI полю
+    // РЈРґР°СЂ РїРѕ AI РїРѕР»СЋ
     public void WhoClickAI(int x, int y)
     {
         EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepAI(this)));

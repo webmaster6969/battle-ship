@@ -6,11 +6,11 @@ using UnityEngine;
 public class GenerationPlayingField
 {
 
-    // Ширина и высота
+    // 
     protected int Width, Height;
     protected Vector2Int StartPosition;
 
-    // Массив ячеек игрового поля
+    // С›Р°СЃСЃРёРІ В¤С‡РµРµРє РёРіСЂРѕРІРѕРіРѕ РїРѕР»В¤
     private List<Cell> ListCell = new List<Cell>();
 
     public GenerationPlayingField(int width, int height, Vector2Int startPosition)
@@ -25,11 +25,11 @@ public class GenerationPlayingField
 
     public void GenerationShipList()
     {
-        // Генерируем корабли на поле
+        // 
         GenerationShip generationShip = new GenerationShip();
         int[,] ships = generationShip.Generation(10);
 
-        // Расставляем коробли на доску
+        // 
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
@@ -47,11 +47,11 @@ public class GenerationPlayingField
         }
     }
 
-    // Генерация игровых ячеек
+    // 
     public void GenerationPlayingFieldSea()
     {
 
-        // Генерируем игровые ячейки
+        // 
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
@@ -74,10 +74,10 @@ public class GenerationPlayingField
         }
     }
 
-    // Генерация надписей
+    // 
     public void GenerationPlayingFieldSymbol()
     {
-        // Генерируем цифры
+        // 
         for (int y = 0; y < Height; y++)
         {
            // GameObject cell = Instantiate(eNums);
@@ -85,7 +85,7 @@ public class GenerationPlayingField
             ListCell.Add(new CellSymbol(null, new Vector2Int(StartPosition.x - 1, StartPosition.y - 1 - y), y));
         }
 
-        // Генерируем буквы
+        // 
         for (int x = 0; x < Width; x++)
         {
             //GameObject cell = Instantiate(eLiters);
