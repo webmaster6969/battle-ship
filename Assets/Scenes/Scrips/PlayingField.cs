@@ -26,35 +26,28 @@ public class PlayingField: MonoBehaviour
 
     //public bool generationShip = false;
 
-    public void Start()
+    public void Awake()
     {
         this.GenerationPlayingFieldSea();
         this.GenerationPlayingFieldSymbol();
-        this.GenerationShipList();
+        //this.GenerationShipList();
     }
 
-    public void GenerationShipList()
+
+    public void SetStateCells(GameState[,] state)
     {
-        // 
-        GenerationShip generationShip = new GenerationShip();
-        int[,] ships = generationShip.Generation(10);
-
-        // 
         Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-
 
         //
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
             {
-                int readX = StartPosition.x + x;
-                int readY = StartPosition.y - y - 1;
-                Cell cell = ListCell.Find(cell => cell.GetPosition().x == readX && cell.GetPosition().y == readY && cell.GetStatus() == Cell.CELL_EMPTY);
-                if (cell != null && ships[x, y] == 1)
+                Cell cell = ListCell.Find(cell => cell.GetNumberCell().x == x && cell.GetNumberCell().y == y);
+                if (cell != null)
                 {
-                    cell.SetStatus(Cell.CELL_SHIP);
-                    cell.SetIndexSprite(Cell.CELL_SHIP);
+                    cell.SetStatus(state[x, y].Status);
+                    cell.SetIndexSprite(state[x, y].Status);
                 }
 
             }
@@ -76,14 +69,15 @@ public class PlayingField: MonoBehaviour
                 GameObject cell = Instantiate(eCells);
                 cell.transform.SetParent(this.transform, false);
                 //cell.GetComponent<ClickPole>().whoPerent = this.gameObject;
-                cell.GetComponent<ClickPole>().coordX = StartPosition.x + x;
-                cell.GetComponent<ClickPole>().CoordY = StartPosition.y - y - 1;
+                cell.GetComponent<ClickPole>().coordX = x;
+                cell.GetComponent<ClickPole>().CoordY = y;
 
 
                 ListCell.Add(
                     new CellEmpty(
                             cell,
                             new Vector2Int(StartPosition.x + x, StartPosition.y - y - 1),
+                            new Vector2Int(x, y),
                             0
                         )
                     );
@@ -102,7 +96,7 @@ public class PlayingField: MonoBehaviour
         {
             GameObject cell = Instantiate(eNums);
             cell.transform.SetParent(this.transform, false);
-            ListCell.Add(new CellSymbol(cell, new Vector2Int(StartPosition.x - 1, StartPosition.y - 1 - y), y));
+            ListCell.Add(new CellSymbol(cell, new Vector2Int(StartPosition.x - 1, StartPosition.y - 1 - y), new Vector2Int(0, y), y));
         }
 
         //
@@ -110,7 +104,7 @@ public class PlayingField: MonoBehaviour
         {
             GameObject cell = Instantiate(eLiters);
             cell.transform.SetParent(this.transform, false);
-            ListCell.Add(new CellSymbol(cell, new Vector2Int(StartPosition.x + x, StartPosition.y), x));
+            ListCell.Add(new CellSymbol(cell, new Vector2Int(StartPosition.x + x, StartPosition.y), new Vector2Int(x, 0), x));
         }
     }
 
@@ -120,7 +114,7 @@ public class PlayingField: MonoBehaviour
         //Vector2Int CellPos = GetRealCoordinateCell(x, y);
        // Debug.Log("HittingCell X: " + CellPos.x + " Y: " + CellPos.y);
 
-        Cell cell = ListCell.Find(cell => cell.GetPosition().x == x && cell.GetPosition().y == y);
+        Cell cell = ListCell.Find(cell => cell.GetNumberCell().x == x && cell.GetNumberCell().y == y);
         if (cell != null)
         {
             cell.SetStatus(Status);
@@ -132,19 +126,8 @@ public class PlayingField: MonoBehaviour
     // 
     public Cell GetCell(int x, int y, bool convertCoord = false)
     {
-        int realX = x, realY = y;
-        Debug.Log("HittingCell X: " + realX + " Y: " + realY);
-        if (convertCoord)
-        {
-            Vector2Int CellPos = GetRealCoordinateCell(x, y);
-            realX = CellPos.x;
-            realY = CellPos.y;
-            Debug.Log("HittingCell(Convert) X: " + realX + " Y: " + realY);
-        }
-        
-        
 
-        return ListCell.Find(cell => cell.GetPosition().x == realX && cell.GetPosition().y == realY);
+        return ListCell.Find(cell => cell.GetNumberCell().x == x && cell.GetNumberCell().y == y);
     }
 
     // 

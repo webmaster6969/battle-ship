@@ -16,6 +16,7 @@ public class GenerationShip
 
     public int[,] Generation(int lengCells)
     {
+        ClearPole();
         this.lengCells = lengCells;
         ListCell = new int[this.lengCells, this.lengCells];
         EnterRandomShip();

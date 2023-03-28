@@ -14,7 +14,7 @@ public class ApplicationGame : MonoBehaviour
     // Управление подписками
     public GameObject EventManager;
 
-
+    public CoreLogic coreLogic;
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +25,14 @@ public class ApplicationGame : MonoBehaviour
         clientGen.GenerationShipList();
         PlayingFieldClient.SetListCell(clientGen.GetListCell());*/
 
+        PlayingFieldClient.SetStateCells(coreLogic.GetGameData().StateClient);
+        PlayingFieldAI.SetStateCells(coreLogic.GetGameData().StateAI);
         EventManager.GetComponent<EventManager>().Attach(new GameEvent(this));
     }
 
     public void WhoClickClient(int x, int y)
     {
-        Cell cell = PlayingFieldClient.GetCell(x, y, true);
+        /*Cell cell = PlayingFieldClient.GetCell(x, y, true);
     
         if (cell != null)
         {
@@ -45,14 +47,18 @@ public class ApplicationGame : MonoBehaviour
             }
         }
 
-        EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));
+        EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));*/
     }
 
     // Удар по AI полю
     public void WhoClickAI(int x, int y)
     {
         EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepAI(this)));
-        Cell cell = PlayingFieldAI.GetCell(x, y);
+        coreLogic.WhoClick(x, y);
+        PlayingFieldClient.SetStateCells(coreLogic.GetGameData().StateClient);
+        PlayingFieldAI.SetStateCells(coreLogic.GetGameData().StateAI);
+        EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));
+        /*Cell cell = PlayingFieldAI.GetCell(x, y);
 
         if(cell != null)
         {
@@ -64,12 +70,12 @@ public class ApplicationGame : MonoBehaviour
                     PlayingFieldAI.ChangeCell(Cell.CELL_HIT, x, y);
                     break;
             }
-        }
+        }*/
 
-        this.WhoClickClient(Random.Range(0, 10), Random.Range(0, 10));
+        //this.WhoClickClient(Random.Range(0, 10), Random.Range(0, 10));
 
-        
-      //  MapGameAI.GetComponent<GameEvent>().SetStatus(GameEvent.STATUS_NOT_STEP_MADE);
+
+        //  MapGameAI.GetComponent<GameEvent>().SetStatus(GameEvent.STATUS_NOT_STEP_MADE);
         //EventManager.Notify(Type, new DataObserver(DataObserver.WHO_CLICK, new Vector2Int(x, y)));
     }
 

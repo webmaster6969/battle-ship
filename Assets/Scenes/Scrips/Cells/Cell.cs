@@ -28,8 +28,11 @@ public class Cell
     // Объяет который находится на сцене
     private GameObject GameObject;
 
-    // Позиция ячейки
+    // Позиция ячейки в пространстве
     private Vector2Int Position;
+
+    // Номер ячейки
+    private Vector2Int NumberCell;
 
     // Статус ячейки
     private int Status;
@@ -38,6 +41,8 @@ public class Cell
     private int IndexSprite;
 
     public Vector2Int GetPosition() { return Position; }
+
+    public Vector2Int GetNumberCell() { return NumberCell; }
 
     public int GetStatus() { return Status; }
 
@@ -55,11 +60,12 @@ public class Cell
         this.GameObject.GetComponent<Chanks>().index = indexSprite;
     }
 
-        public Cell(GameObject gameObject, Vector2Int pos, int indexSprite)
+        public Cell(GameObject gameObject, Vector2Int pos, Vector2Int NumberCell, int indexSprite)
     {
         this.Position = pos;
         this.GameObject = gameObject;
         this.GameObject.transform.position = new Vector3(Position.x, Position.y, 0);
+        this.NumberCell = NumberCell;
         this.IndexSprite = indexSprite;
         this.GameObject.GetComponent<Chanks>().index = indexSprite;
     }
