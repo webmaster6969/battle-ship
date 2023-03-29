@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+// Класс для генерации кораблей на поле игры
 public class GenerationShip
 {
-
     // Какие корабли ставим на поле
     public int[] ShipCount = { 0, 4, 3, 2, 1 };
 
@@ -14,8 +12,10 @@ public class GenerationShip
     // Длина ячеек по вертикале и горизонтале
     private int lengCells;
 
+    // Генерируем корабли на поле боя
     public int[,] Generation(int lengCells)
     {
+        // Очищаем ячейки
         ClearPole();
         this.lengCells = lengCells;
         ListCell = new int[this.lengCells, this.lengCells];
@@ -58,15 +58,12 @@ public class GenerationShip
     // Устанавливаем корабль с текущей клетки
     private bool EnterDeck(int ShipType, int Direct, int X, int Y)
     {
-
         // Пытаемся устанавить все палубы в клетки
         Vector2Int[] P = TestEnterShip(ShipType, Direct, X, Y);
-
 
         // Если установка удачна, значит заполняем основной массив и меняем значения ячеек на другие спрайты и статусы
         if (P != null)
         {
-
             // Перебираем все ячейки и ставим статус который меняет так же спрайт
             foreach (Vector2Int T in P)
             {
@@ -194,13 +191,11 @@ public class GenerationShip
         return null;
     }
 
-
     // Проверяем можем ли разметить корабль с данной клетки
     private Vector2Int[] TestEnterShipDirect(int ShipType, int XD, int YD, int X, int Y)
     {
         // Выделяем память под конкретный типа карабля
         Vector2Int[] ResultCoord = new Vector2Int[ShipType];
-
 
         // Проходим по всем ячейкам
         for (int P = 0; P < ShipType; P++)
@@ -223,5 +218,4 @@ public class GenerationShip
 
         return ResultCoord;
     }
-
 }

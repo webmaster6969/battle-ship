@@ -4,41 +4,37 @@ using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
+// Основное игровое поле
 public class PlayingField: MonoBehaviour
 {
 
-    // 
+    // Набор букв, цифр и клеток
     public GameObject eLiters, eNums, eCells;
 
-    // 
+    // Набор всех клеток
     private List<Cell> ListCell = new List<Cell>();
 
-    // 
+    // Ширина и высота поля
     public int Width, Height;
 
-    /*public PlayingField(int width, int height) { 
-        this.Width = width;
-        this.Height = height;
-    }*/
-
-    // 
+    // Получения набора поля
     public List<Cell> GetListCell() { return ListCell; }
 
     //public bool generationShip = false;
 
     public void Awake()
     {
+        // Генерация ячеек поля
         this.GenerationPlayingFieldSea();
+
+        // Генерация ячеек символов
         this.GenerationPlayingFieldSymbol();
-        //this.GenerationShipList();
     }
 
-
+    // Установка состояния ячеек
     public void SetStateCells(GameState[,] state)
     {
-        Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-
-        //
+        // Проходим по всему полю
         for (int x = 0; x < Width; x++)
         {
             for (int y = 0; y < Height; y++)
@@ -57,22 +53,25 @@ public class PlayingField: MonoBehaviour
     // 
     public void GenerationPlayingFieldSea()
     {
-        // 
+        // Откуда начинается отчет установки поля
         Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
 
-        // 
+        // Проходим по всему массиву
         for (int x = 0; x < Width; x++) 
         {
             for (int y = 0; y < Height; y++)
             {
+                // Создаем игровой объект
                 GameObject cell = Instantiate(eCells);
+                // Устанавливаем его пложение в иерархии
                 cell.transform.SetParent(this.transform, false);
                 //cell.GetComponent<ClickPole>().whoPerent = this.gameObject;
+                // Ставим виртуальное положение
                 cell.GetComponent<ClickPole>().coordX = x;
                 cell.GetComponent<ClickPole>().CoordY = y;
 
-
+                // Добавляем ячейку к основному состоянию
                 ListCell.Add(
                     new CellEmpty(
                             cell,
@@ -85,13 +84,13 @@ public class PlayingField: MonoBehaviour
         }
     }
 
-    // 
+    // Генерация символов
     public void GenerationPlayingFieldSymbol()
     {
-        // 
+        // Откуда начинается установки ячеек
         Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
 
-        // 
+        // Ставим цифры в свое положение
         for (int y = 0; y < Height; y++)
         {
             GameObject cell = Instantiate(eNums);
@@ -99,7 +98,7 @@ public class PlayingField: MonoBehaviour
             ListCell.Add(new CellSymbol(cell, new Vector2Int(StartPosition.x - 1, StartPosition.y - 1 - y), new Vector2Int(0, y), y));
         }
 
-        //
+        // Ставим сиволы в свое положение
         for (int x = 0; x < Width; x++)
         {
             GameObject cell = Instantiate(eLiters);
@@ -108,12 +107,9 @@ public class PlayingField: MonoBehaviour
         }
     }
 
-    // 
+    // Меняем состояние ячейки
     public void ChangeCell(int Status, int x, int y)
     {
-        //Vector2Int CellPos = GetRealCoordinateCell(x, y);
-       // Debug.Log("HittingCell X: " + CellPos.x + " Y: " + CellPos.y);
-
         Cell cell = ListCell.Find(cell => cell.GetNumberCell().x == x && cell.GetNumberCell().y == y);
         if (cell != null)
         {
@@ -123,10 +119,9 @@ public class PlayingField: MonoBehaviour
 
     }
 
-    // 
-    public Cell GetCell(int x, int y, bool convertCoord = false)
+    // Получаем нужную ячейку
+    public Cell GetCell(int x, int y)
     {
-
         return ListCell.Find(cell => cell.GetNumberCell().x == x && cell.GetNumberCell().y == y);
     }
 

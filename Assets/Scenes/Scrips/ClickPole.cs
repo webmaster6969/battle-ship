@@ -1,6 +1,6 @@
 using UnityEngine;
 
-
+// Класс который реагирует на нажатие клиента по полю
 public class ClickPole : MonoBehaviour
 {
     public GameObject EventManager;

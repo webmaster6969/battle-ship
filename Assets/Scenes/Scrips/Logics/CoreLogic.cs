@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
+// Модуль отвечает за логику и управление состоянием поля
 public struct GameState
 {
+
+    // Состояние ячейки
     public GameState(int Status, Vector2Int Position) {
         this.Position = Position;
         this.Status = Status;
@@ -19,10 +19,14 @@ public struct GameState
         this.Status = Status;
     }
 
+    // Позиция ячейки
     public Vector2Int Position;
+
+    // Статус ячейки
     public int Status;
 }
 
+// Весь набор полей
 public struct GameData
 {
     public GameData(int Width, int Height)
@@ -31,13 +35,18 @@ public struct GameData
         StateAI = new GameState[Width, Height];
     }
 
+
+    // Поле игрока
     public GameState[,] StateClient;
+
+    // Поле бота
     public GameState[,] StateAI;
 }
 
 public class CoreLogic : MonoBehaviour
 {
 
+    // Набор полей и их состояний
     protected GameData stateGame;
 
     public GameData GetGameData()
@@ -48,6 +57,7 @@ public class CoreLogic : MonoBehaviour
     // Инициализация стартовых данных
     void Awake()
     {
+        // Создаем состояния полей
         stateGame = new GameData(10, 10);
         GenerationShip generationShipClient = new GenerationShip();
         GenerationShip generationShipAI = new GenerationShip();
