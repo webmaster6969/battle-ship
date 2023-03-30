@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
-public class Scene01MainMenuController : MonoBehaviour
+public class ManagerNetwork : MonoBehaviour
 {
 
     [SerializeField] static private GameConnection _connection;
@@ -22,7 +22,7 @@ public class Scene01MainMenuController : MonoBehaviour
 			
 	}
 
-	private async void Start()
+	private void Start()
 	{
         authClientToServer = new AuthClientToServer();
         authClientToServer.Init();

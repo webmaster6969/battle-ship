@@ -42,7 +42,7 @@ public class ConnectMatch : MonoBehaviour
 
     public async void Connect()
     {
-        _connection = Scene01MainMenuController.getConnect();
+        _connection = ManagerNetwork.getConnect();
         _connection.Socket.ReceivedMatchmakerMatched += OnMatchmakerMatched;
 
         // Join the matchmaker
