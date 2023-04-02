@@ -43,7 +43,7 @@ public struct GameData
     public GameState[,] StateAI;
 }
 
-public class CoreLogic : MonoBehaviour
+public class CoreLogic
 {
 
     // Набор полей и их состояний
@@ -55,7 +55,7 @@ public class CoreLogic : MonoBehaviour
     }
 
     // Инициализация стартовых данных
-    void Awake()
+    public CoreLogic()
     {
         // Создаем состояния полей
         stateGame = new GameData(10, 10);
@@ -66,9 +66,9 @@ public class CoreLogic : MonoBehaviour
         int[,] shipsAI = generationShipAI.Generation(10);
 
         // Установка ячеек
-        for (int x = 0; x < 10; x++)
+        for (int y = 0; y < 10; y++) 
         {
-            for (int y = 0; y < 10; y++)
+            for (int x = 0; x < 10; x++)
             {
                 int readX = x;
                 int readY = y;
@@ -101,7 +101,7 @@ public class CoreLogic : MonoBehaviour
     }
 
     // Ход клиента
-    public void MoveAI()
+    public virtual void MoveAI()
     {
         int x = Random.Range(0, 10);
         int y = Random.Range(0, 10);
@@ -126,7 +126,7 @@ public class CoreLogic : MonoBehaviour
     }
 
     // Удар по боту
-    public void WhoClick(int x, int y)
+    public virtual void WhoClick(int x, int y)
     {
         switch (stateGame.StateAI[x, y].GetStatus())
         {
@@ -138,11 +138,5 @@ public class CoreLogic : MonoBehaviour
                 stateGame.StateAI[x, y].SetStatus(Cell.CELL_HIT);
                 break;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
