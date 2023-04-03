@@ -63,11 +63,11 @@ public class ApplicationGame : MonoBehaviour
                 int readY = y;
 
                 // Установка данных для клиента
-                stateClient[readX, readY].Status = gameDataStruct.PlayersGame.PlayerClient.Board.Grid[x][y];
+             //   stateClient[readX, readY].Status = gameDataStruct.PlayersGame.PlayerClient.Board.Grid[x][y];
 
 
                 // Установка данных для AI
-                stateBot[readX, readY].Status = gameDataStruct.PlayersGame.PlayerBot.Board.Grid[x][y];
+            //    stateBot[readX, readY].Status = gameDataStruct.PlayersGame.PlayerBot.Board.Grid[x][y];
 
                 stateClient[readX, readY].Position = new Vector2Int(readX, readY);
                 stateBot[readX, readY].Position = new Vector2Int(readX, readY);

@@ -11,55 +11,32 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+namespace battle{
+    [System.Serializable]
+    public struct Cell
+    {
+
+        public Location Location;
+        public int Status;
+    }
+}
+
+
 [System.Serializable]
-public class DataPointGrid
+public struct Grid
 {
-    public bool debug;
-    public int[] botGrid;
-    public int[] clientGrid;
-    public int Status;
-}
 
-/*
-type Location struct {
-
-    X int `json: "x"`
-	Y int `json: "y"`
+    public battle.Cell[] Cells;
 }
-
-type Player struct {
-    // Имя игрока
-    Name string `json: "name"`
-	// Доска игрока
-	Board* Board `json:"board"`
-	Hits int    `json: "hits"`
-	Misses int    `json: "misses"`
-}
-
-type Ship struct {
-    // Длина корабля
-    Size int `json: "size"`
-	// Расположение
-	Location[] Location `json:"location"`
-	// Жизни корабля
-	Hits int `json: "hits"`
-}
-
-type Board struct {
-	Size  int     `json:"Size"`
-	Ships []*Ship `json:"ships"`
-	Grid  [][]int `json:"grid"`
-}
- 
- */
 
 [System.Serializable]
 public struct Board
 {
 
     public int Size;
-    public Ship[] Ships;
-    public int[][] Grid;
+    public List<Ship> Ships;
+    public Grid Grid;
 }
 
 [System.Serializable]
@@ -96,11 +73,6 @@ public struct Players
     public Player PlayerClient;
     public Player PlayerBot;
 }
-
-/*
-Debug bool `json: "debug"`
-	PlayersGame Players
-	Status      int `json:"status"`*/
 
 [System.Serializable]
 public struct GameDataStruct
@@ -167,7 +139,7 @@ public class ConnectMatch : MonoBehaviour
 
             if (matchState.OpCode == SendAllGridsOpCode)
             {
-                GameDataStruct data = JsonUtility.FromJson<GameDataStruct>(stateJson);
+                GameDataStruct data = JsonUtility.FromJson<GameDataStruct>(stateJson);//JsonUtility.FromJson<GameDataStruct>(stateJson);
                 this.GetComponent<ApplicationGame>().ChangeState(data);
                 Debug.Log("STATE: " + data);
             }
