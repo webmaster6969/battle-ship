@@ -89,6 +89,7 @@ public class ApplicationGame : MonoBehaviour
                 {
                     stateClient[loc.X, loc.Y].Status = Cell.CELL_SHIP;
                 }
+                
             }
         }
 

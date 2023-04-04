@@ -26,6 +26,9 @@ public class Cell
     // Ячейка с частью коробля
     public const int CELL_SHIP = 4;
 
+    // Пустое поле
+    public const int CELL_NULL = 5;
+
 
     // Объяет который находится на сцене
     private GameObject GameObject;

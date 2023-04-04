@@ -139,7 +139,7 @@ public class ConnectMatch : MonoBehaviour
 
             if (matchState.OpCode == SendAllGridsOpCode)
             {
-                GameDataStruct data = JsonUtility.FromJson<GameDataStruct>(stateJson);//JsonUtility.FromJson<GameDataStruct>(stateJson);
+                GameDataStruct data = JsonUtility.FromJson<GameDataStruct>(stateJson);
                 this.GetComponent<ApplicationGame>().ChangeState(data);
                 Debug.Log("STATE: " + data);
             }
