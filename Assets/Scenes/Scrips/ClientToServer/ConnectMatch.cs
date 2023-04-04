@@ -27,7 +27,7 @@ namespace battle{
 public struct Grid
 {
 
-    public battle.Cell[] Cells;
+    public List<battle.Cell> Cells;
 }
 
 [System.Serializable]

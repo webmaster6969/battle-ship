@@ -35,6 +35,15 @@ public struct GameData
         StateAI = new GameState[Width, Height];
     }
 
+    public void SetStateClient(GameState[,] stateClient)
+    {
+        StateClient = stateClient;
+    }
+
+    public void SetStateAI(GameState[,] stateAI)
+    {
+        StateAI = stateAI;
+    }
 
     // Поле игрока
     public GameState[,] StateClient;
@@ -49,9 +58,9 @@ public class CoreLogic
     // Набор полей и их состояний
     protected GameData stateGame;
 
-    public GameData GetGameData()
+    public ref GameData GetGameData()
     {
-        return this.stateGame;
+        return ref this.stateGame;
     }
 
     // Инициализация стартовых данных

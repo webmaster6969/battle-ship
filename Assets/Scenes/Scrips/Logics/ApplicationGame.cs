@@ -1,3 +1,5 @@
+using Nakama;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 // Основной объект приложения который следит за всеми модулями
@@ -41,19 +43,19 @@ public class ApplicationGame : MonoBehaviour
         coreLogic.WhoClick(x, y);
 
         // Устанавливаем состояние полученое от сервера клиенту
-        PlayingFieldClient.SetStateCells(coreLogic.GetGameData().StateClient);
+      //  PlayingFieldClient.SetStateCells(coreLogic.GetGameData().StateClient);
 
         // Устанавливаем состояние полученое от сервера боту
-        PlayingFieldAI.SetStateCells(coreLogic.GetGameData().StateAI);
+      //  PlayingFieldAI.SetStateCells(coreLogic.GetGameData().StateAI);
 
         // Устанавливаем состояние на нажатие от клиента
-        EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));
+       // EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));
     }
 
     public void ChangeState(GameDataStruct gameDataStruct)
     {
-        GameState[,] stateClient = new GameState[10, 10];
-        GameState[,] stateBot = new GameState[10, 10];
+        GameState[,] stateClient = coreLogic.GetGameData().StateClient;
+        GameState[,] stateBot = coreLogic.GetGameData().StateAI;
         
         for (int y = 0; y < 10; y++)
         {
@@ -62,12 +64,16 @@ public class ApplicationGame : MonoBehaviour
                 int readX = x;
                 int readY = y;
 
+                
+
                 // Установка данных для клиента
-             //   stateClient[readX, readY].Status = gameDataStruct.PlayersGame.PlayerClient.Board.Grid[x][y];
+                battle.Cell cellClient = gameDataStruct.PlayersGame.PlayerClient.Board.Grid.Cells.Find(c => c.Location.X == x && c.Location.Y == y);
+                stateClient[readX, readY].Status = cellClient.Status;
 
 
                 // Установка данных для AI
-            //    stateBot[readX, readY].Status = gameDataStruct.PlayersGame.PlayerBot.Board.Grid[x][y];
+                battle.Cell cellAI = gameDataStruct.PlayersGame.PlayerBot.Board.Grid.Cells.Find(c => c.Location.X == x && c.Location.Y == y);
+                stateBot[readX, readY].Status = cellAI.Status;
 
                 stateClient[readX, readY].Position = new Vector2Int(readX, readY);
                 stateBot[readX, readY].Position = new Vector2Int(readX, readY);
@@ -75,11 +81,27 @@ public class ApplicationGame : MonoBehaviour
             }
         }
 
+        foreach (Ship ship in gameDataStruct.PlayersGame.PlayerClient.Board.Ships)
+        {
+            foreach (Location loc in ship.Location)
+            {
+                if(stateClient[loc.X, loc.Y].Status == Cell.CELL_EMPTY)
+                {
+                    stateClient[loc.X, loc.Y].Status = Cell.CELL_SHIP;
+                }
+            }
+        }
+
+        coreLogic.GetGameData().SetStateClient(stateClient);
+        coreLogic.GetGameData().SetStateAI(stateBot);
+
         // Устанавливаем состояние полученое от сервера клиенту
         PlayingFieldClient.SetStateCells(coreLogic.GetGameData().StateClient);
 
         // Устанавливаем состояние полученое от сервера боту
         PlayingFieldAI.SetStateCells(coreLogic.GetGameData().StateAI);
+
+        EventManager.GetComponent<EventManager>().Notify("GameEvents", new DataObserver(DataObserver.CHANGE_STATE, new StepClient(this)));
     }
 
     // Update is called once per frame

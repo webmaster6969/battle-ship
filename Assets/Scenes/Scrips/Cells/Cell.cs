@@ -14,15 +14,17 @@ public class Cell
     // Пустая ячейка
     public const int CELL_EMPTY = 0;
 
-    // Ячейка с частью коробля
-    public const int CELL_SHIP = 1;
-
-
     // Ячейка промаха по короблю
-    public const int CELL_MISS = 2;
+    public const int CELL_MISS = 1;
 
     // Ячейка попадания по короблю
-    public const int CELL_HIT = 3;
+    public const int CELL_HIT = 2;
+
+    // Ячейка с частью коробля
+    public const int CELL_DEATH = 3;
+
+    // Ячейка с частью коробля
+    public const int CELL_SHIP = 4;
 
 
     // Объяет который находится на сцене

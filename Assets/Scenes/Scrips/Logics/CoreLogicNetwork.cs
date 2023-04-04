@@ -1,6 +1,16 @@
 using Nakama.TinyJson;
 using UnityEngine;
 
+public struct SendClick
+{
+    public int x; public int y;
+    public SendClick(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 public class CoreLogicNetwork : CoreLogic
 {
 
@@ -42,7 +52,10 @@ public class CoreLogicNetwork : CoreLogic
     public override void WhoClick(int x, int y)
     {
         GameConnection _connection = ManagerNetwork.getConnect();
-        _connection.Socket.SendMatchStateAsync(_connection.match.Payload, 1, JsonWriter.ToJson(new Vector2Int(x,y)));
+        SendClick v = new SendClick(x, y);
+        string json = JsonWriter.ToJson(v);
+        _connection.Socket.SendMatchStateAsync(_connection.match.Payload, 1, json);
+
         /*switch (stateGame.StateAI[x, y].GetStatus())
         {
             case Cell.CELL_EMPTY:
