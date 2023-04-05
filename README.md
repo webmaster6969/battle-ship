@@ -1,7 +1,7 @@
 Проект создан исключительно для образовательных целей, в основном для изучения golang
 
 ## Server [![GitHub release](https://img.shields.io/github/release/heroiclabs/nakama.svg)](https://heroiclabs.com/docs/nakama/getting-started/install/)
-В папке nakama-server лежат файлы для сервера.<br>
+В папке nakama-server лежат файлы для сервера, серверная часть делалась в качестве модуля к серверу nakama [![GitHub release](https://img.shields.io/github/release/heroiclabs/nakama.svg)](https://heroiclabs.com/docs/nakama/getting-started/install/)<br>
 Код разделен на три файла: models.go, board.go и main.go. В файле models.go определены модели игры, в файле board.go определен класс для доски, а в файле main.go определена основная логика игры.<br>
 Класс Board определяет методы для расстановки кораблей, выстрела, проверки наличия оставшихся кораблей и печати доски. Метод NewBoard принимает размер доски и массив, содержащий количество кораблей разных размеров, которые должны быть расставлены на доске.<br>
 Функция parseCoordinate разбирает строку, содержащую координаты выстрела, и возвращает две целочисленные переменные, содержащие координаты в массиве Grid.<br>
