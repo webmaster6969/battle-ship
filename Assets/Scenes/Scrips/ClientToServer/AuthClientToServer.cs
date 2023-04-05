@@ -107,9 +107,6 @@ public class AuthClientToServer
 
         if (string.IsNullOrWhiteSpace(deviceId))
         {
-            // Ordinarily, we would use SystemInfo.deviceUniqueIdentifier but for the purposes
-            // of this demo we use Guid.NewGuid() so that developers can test against themselves locally.
-            // Also note: SystemInfo.deviceUniqueIdentifier is not supported in WebGL.
             deviceId = Guid.NewGuid().ToString();
         }
 

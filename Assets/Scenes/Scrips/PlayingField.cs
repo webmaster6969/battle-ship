@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.NetworkInformation;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 // Основное игровое поле
@@ -66,7 +64,7 @@ public class PlayingField: MonoBehaviour
                 GameObject cell = Instantiate(eCells);
                 // Устанавливаем его пложение в иерархии
                 cell.transform.SetParent(this.transform, false);
-                //cell.GetComponent<ClickPole>().whoPerent = this.gameObject;
+
                 // Ставим виртуальное положение
                 cell.GetComponent<ClickPole>().coordX = x;
                 cell.GetComponent<ClickPole>().CoordY = y;
@@ -125,13 +123,4 @@ public class PlayingField: MonoBehaviour
         return ListCell.Find(cell => cell.GetNumberCell().x == x && cell.GetNumberCell().y == y);
     }
 
-    // 
-    private Vector2Int GetRealCoordinateCell(int x, int y)
-    {
-        Vector2Int StartPosition = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-        int readX = StartPosition.x + x;
-        int readY = StartPosition.y - y - 1;
-
-        return new Vector2Int(readX, readY);
-    }
 }

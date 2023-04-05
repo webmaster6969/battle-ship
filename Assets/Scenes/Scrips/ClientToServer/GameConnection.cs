@@ -2,8 +2,7 @@
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "GameConnection",
-menuName = GameConstants.CreateAssetMenu_GameConnection)]
+
 public class GameConnection : ScriptableObject
 {
 	private IClient _client;

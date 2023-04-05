@@ -54,17 +54,8 @@ public class CoreLogicNetwork : CoreLogic
         GameConnection _connection = ManagerNetwork.getConnect();
         SendClick v = new SendClick(x, y);
         string json = JsonWriter.ToJson(v);
-        _connection.Socket.SendMatchStateAsync(_connection.match.Payload, 1, json);
 
-        /*switch (stateGame.StateAI[x, y].GetStatus())
-        {
-            case Cell.CELL_EMPTY:
-                stateGame.StateAI[x, y].SetStatus(Cell.CELL_MISS);
-                this.MoveAI();
-                break;
-            case Cell.CELL_SHIP:
-                stateGame.StateAI[x, y].SetStatus(Cell.CELL_HIT);
-                break;
-        }*/
+        // Отправляем нажадтие на сервер
+        _connection.Socket.SendMatchStateAsync(_connection.match.Payload, 1, json);
     }
 }

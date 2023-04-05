@@ -14,16 +14,16 @@ public class Cell
     // Пустая ячейка
     public const int CELL_EMPTY = 0;
 
-    // Ячейка промаха по короблю
+    // Ячейка промаха по кораблю
     public const int CELL_MISS = 1;
 
-    // Ячейка попадания по короблю
+    // Ячейка попадания по кораблю
     public const int CELL_HIT = 2;
 
-    // Ячейка с частью коробля
+    // Ячейка уничтоженного корабля
     public const int CELL_DEATH = 3;
 
-    // Ячейка с частью коробля
+    // Ячейка с частью корабля
     public const int CELL_SHIP = 4;
 
     // Пустое поле
@@ -59,13 +59,14 @@ public class Cell
         this.Status = status;
     }
 
+    // Выставляем правильный спрайт у данной ячейки
     public void SetIndexSprite(int indexSprite)
     {
         this.IndexSprite = indexSprite;
         this.GameObject.GetComponent<Chanks>().index = indexSprite;
     }
 
-        public Cell(GameObject gameObject, Vector2Int pos, Vector2Int NumberCell, int indexSprite)
+    public Cell(GameObject gameObject, Vector2Int pos, Vector2Int NumberCell, int indexSprite)
     {
         this.Position = pos;
         this.GameObject = gameObject;

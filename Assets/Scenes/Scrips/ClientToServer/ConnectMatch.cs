@@ -1,17 +1,10 @@
 using Nakama;
-using Nakama.TinyJson;
-using Satori;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-
+// Структура ячейки
 namespace battle{
     [System.Serializable]
     public struct Cell
@@ -22,7 +15,7 @@ namespace battle{
     }
 }
 
-
+// Структура лист ячеек
 [System.Serializable]
 public struct Grid
 {
@@ -30,6 +23,7 @@ public struct Grid
     public List<battle.Cell> Cells;
 }
 
+// Структура поля
 [System.Serializable]
 public struct Board
 {
@@ -39,6 +33,7 @@ public struct Board
     public Grid Grid;
 }
 
+// Позиция ячейки
 [System.Serializable]
 public struct Location
 {
@@ -47,6 +42,7 @@ public struct Location
     public int Y;
 }
 
+// Структура корабля и позиция на поле
 [System.Serializable]
 public struct Ship
 {
@@ -56,6 +52,7 @@ public struct Ship
     public int Hits;
 }
 
+// Структура Игрока
 [System.Serializable]
 public struct Player
 {
@@ -66,6 +63,7 @@ public struct Player
     public int Misses;
 }
 
+// Структура игрока
 [System.Serializable]
 public struct Players
 {
@@ -74,6 +72,7 @@ public struct Players
     public Player PlayerBot;
 }
 
+// Структура игроков
 [System.Serializable]
 public struct GameDataStruct
 {
@@ -84,7 +83,7 @@ public struct GameDataStruct
 
 public class ConnectMatch : MonoBehaviour
 {
-
+    // Говорит о том что пришел объект все полей
     const int SendAllGridsOpCode = 2;
     private IMatchmakerTicket _ticket;
     private GameConnection _connection;
@@ -101,6 +100,7 @@ public class ConnectMatch : MonoBehaviour
         
     }
 
+    // Создаем матч
     public async void Connect()
     {
         _connection = ManagerNetwork.getConnect();
@@ -150,6 +150,7 @@ public class ConnectMatch : MonoBehaviour
 
     }
 
+   
     private void OnMatchmakerMatched(IMatchmakerMatched matched)
     {
         _connection.BattleConnection = new BattleConnection(matched);

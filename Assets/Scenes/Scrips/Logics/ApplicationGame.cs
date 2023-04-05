@@ -21,6 +21,7 @@ public class ApplicationGame : MonoBehaviour
     private void Start()
     {
         coreLogic = new CoreLogicNetwork();
+
         // Устанавливаем состояние полученое от сервера клиенту
         PlayingFieldClient.SetStateCells(coreLogic.GetGameData().StateClient);
 
@@ -63,8 +64,6 @@ public class ApplicationGame : MonoBehaviour
             {
                 int readX = x;
                 int readY = y;
-
-                
 
                 // Установка данных для клиента
                 battle.Cell cellClient = gameDataStruct.PlayersGame.PlayerClient.Board.Grid.Cells.Find(c => c.Location.X == x && c.Location.Y == y);
